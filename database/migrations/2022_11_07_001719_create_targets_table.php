@@ -1,0 +1,41 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateTargetsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('targets', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')
+                ->constrained();
+            $table->string('title');
+            $table->text('description');
+            $table->tinyInteger('cost');
+            $table->tinyInteger('gain');
+            $table->tinyInteger('priority');
+            $table->date('deadline');
+            $table->tinyInteger('sugested_priority');
+            $table->boolean('status')->default(true);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('targets');
+    }
+}
