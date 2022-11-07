@@ -1,27 +1,24 @@
 <template>
     <main>
-        <h1>TargetManager</h1>
-        <nav>
-            <ul>
-                <li>
-                    <router-link :to="{ name: 'home' }" exact>Home</router-link>
-                    <router-link :to="{ name: 'example' }">Exemplo</router-link>
-                </li>
-            </ul>
-        </nav>
-        <content>
+        <Sidebar></Sidebar>
+        <content class="m-2">
             <router-view></router-view>
         </content>
-        <footer>
+        <footer class="bg-dark m-2 rounded-2 text-light text-center">
             @Todos os direitos violados
         </footer>
+        <!-- <Login></Login> -->
     </main>
 </template>
 
 <script>
+
+import Login from '../pages/Login.vue';
+import Sidebar from './Sidebar.vue';
+
 export default {
     mounted() {
-        console.log('main');
-    }
+    },
+    components: { Login, Sidebar }
 }
 </script>

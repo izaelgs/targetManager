@@ -1,6 +1,11 @@
-import ExampleComponent from '../components/ExampleComponent';
-import Home from '../components/Home';
-import NotFound from '../components/NotFound';
+import Home from '../pages/Home';
+import NotFound from '../pages/NotFound';
+import categories from '../pages/categories';
+import Target from '../pages/Target';
+import CreateTarget from '../pages/CreateTarget';
+import Login from '../pages/Login';
+
+import Guard from '../services/middleware';
 
 export default {
     mode: 'history',
@@ -9,18 +14,34 @@ export default {
     routes: [
         {
             path: '*',
+            name: 'notfound',
             component: NotFound,
-            name: 'notfound'
         },
         {
             path: '/',
+            name: 'home',
             component: Home,
-            name: 'home'
         },
         {
-            path: '/example',
-            component: ExampleComponent,
-            name: 'example'
+            path: '/login',
+            name: 'login',
+            component: Login,
+        },
+        {
+            path: '/categories',
+            name: 'categories',
+            component: categories,
+        },
+        {
+            path: '/target/:id',
+            name: 'show-target',
+            component: Target,
+        },
+        {
+            path: '/new-target',
+            name: 'new-target',
+            component: CreateTarget,
+            beforeEnter: Guard.auth
         },
     ]
 }
