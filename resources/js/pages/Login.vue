@@ -1,6 +1,6 @@
 <template>
-    <div class="position-static">
-        <form @submit.stop.prevent="submit" class="position-absolute top-50 start-50 translate-middle form-signin">
+    <div class="h-100 d-flex justify-content-center align-items-center">
+        <form @submit.stop.prevent="submit" class="form-signin">
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
             <div class="form-floating mt-2">

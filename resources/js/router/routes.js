@@ -36,6 +36,7 @@ export default {
             path: '/target/:id',
             name: 'show-target',
             component: Target,
+            beforeEnter: Guard.auth
         },
         {
             path: '/new-target',

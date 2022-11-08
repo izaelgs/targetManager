@@ -17,7 +17,8 @@ class TargetController extends Controller
     public function index()
     {
         try {
-            return Target::get();
+            // return Target::get();
+            return auth('api')->user()->targets;
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 401);
         }
@@ -36,6 +37,8 @@ class TargetController extends Controller
 
             $diff = strtotime(date('Y-m-d')) - strtotime($data['deadline']);
             $interval = round($diff / 86400) + 30;
+
+            $data['user_id'] = auth('api')->user()->id;
 
             $urgency = $interval > 0 || $interval < 60 ? 2 ** $interval : 1;
             $urgency_log = log($urgency, 2);
@@ -63,7 +66,7 @@ class TargetController extends Controller
     public function show($id)
     {
         try {
-            $target = Target::find($id);
+            $target = auth('api')->user()->targets()->with('categories')->find($id);
             return response()->json($target);
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 401);
@@ -80,7 +83,7 @@ class TargetController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $target = Target::find($id);
+            $target = auth('api')->user()->targets::find($id);
             $target->update($request->all());
 
             if (isset($data['categories'])) {
@@ -106,7 +109,7 @@ class TargetController extends Controller
     public function destroy($id)
     {
         try {
-            $target = Target::find($id);
+            $target = auth('api')->user()->targets::find($id);
             $target->delete();
 
             return response()->json([

@@ -15,7 +15,7 @@
                     </router-link>
                 </li>
             </ul>
-            <ul v-if="targets" v-for="target in targets" class="nav flex-column" :key="target.id">
+            <ul v-if="targets.length" v-for="target in targets" class="nav flex-column" :key="target.id">
                 <router-link :to="{ path: '/target/' + target.id }" exact
                     class="nav-link d-flex align-items-center text-white">
                     <i class="bi-bullseye me-2" style="font-size: 1.5rem; color: cornflowerblue;"></i> {{ target.title

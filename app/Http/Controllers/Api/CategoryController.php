@@ -17,7 +17,7 @@ class CategoryController extends Controller
     public function index()
     {
         try {
-            return Category::get();
+            return auth('api')->user()->categories()->get();
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 401);
         }
@@ -32,7 +32,10 @@ class CategoryController extends Controller
     public function store(categoryRequest $request)
     {
         try {
-            $category = Category::create($request->all());
+            $data = $request->all();
+            $data['user_id'] = auth('api')->user()->id;
+
+            $category = auth('api')->user()->categories()->create($data);
             return response()->json($category);
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 401);
@@ -48,7 +51,7 @@ class CategoryController extends Controller
     public function show($id)
     {
         try {
-            $category = Category::find($id);
+            $category = auth('api')->user()->categories()->find($id);
             return response()->json($category);
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 401);
@@ -65,7 +68,7 @@ class CategoryController extends Controller
     public function update(categoryRequest $request, $id)
     {
         try {
-            $category = Category::find($id);
+            $category = auth('api')->user()->categories()->find($id);
             $category->update($request->all());
             return response()->json([
                 'data' => [
@@ -86,7 +89,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         try {
-            $category = Category::find($id);
+            $category = auth('api')->user()->categories()->find($id);
             $category->delete();
 
             return response()->json([

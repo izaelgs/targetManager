@@ -18280,22 +18280,22 @@ main {
 
 @media only screen and (max-width: 600px) {
   .form-signin {
-    min-width: 80%;
+    width: 80%;
   }
 }
 @media only screen and (min-width: 600px) {
   .form-signin {
-    min-width: 60%;
+    width: 60%;
   }
 }
 @media only screen and (min-width: 768px) {
   .form-signin {
-    min-width: 40%;
+    width: 40%;
   }
 }
 @media only screen and (min-width: 992px) {
   .form-signin {
-    min-width: 20%;
+    width: 20%;
   }
 }
 nav {

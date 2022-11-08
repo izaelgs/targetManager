@@ -24,7 +24,6 @@ class categoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'required',
             'title' => 'required'
         ];
     }

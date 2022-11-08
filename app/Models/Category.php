@@ -28,6 +28,11 @@ class Category extends Model
         return $this->belongsToMany(Target::class);
     }
 
+    public function users()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function isFather()
     {
         return is_null($this->attributes['categoryid']);

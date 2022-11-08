@@ -11,7 +11,6 @@ class Target extends Model
 
     protected $fillable = [
         'user_id',
-        'categoryid',
         'title',
         'description',
         'cost',
