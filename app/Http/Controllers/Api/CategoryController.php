@@ -17,7 +17,7 @@ class CategoryController extends Controller
     public function index()
     {
         try {
-            return auth('api')->user()->categories()->get();
+            return auth('api')->user()->categories()->with('category')->get();
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 401);
         }
@@ -51,7 +51,7 @@ class CategoryController extends Controller
     public function show($id)
     {
         try {
-            $category = auth('api')->user()->categories()->find($id);
+            $category = auth('api')->user()->categories()->with('categories','category')->find($id);
             return response()->json($category);
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 401);

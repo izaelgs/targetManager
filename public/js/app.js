@@ -5380,6 +5380,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -5389,24 +5393,29 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    var _this = this;
-    var token = js_cookie__WEBPACK_IMPORTED_MODULE_0__["default"].get('access_token');
-    fetch('http://localhost:8000/api/target/', {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      }
-    }).then(function (response) {
-      return response.json();
-    }).then(function (data) {
-      if (!data.error) {
-        _this.targets = data;
-      } else {
-        alert(data.error);
-      }
-    });
+    this.appendTargets();
+  },
+  methods: {
+    appendTargets: function appendTargets() {
+      var _this = this;
+      var token = js_cookie__WEBPACK_IMPORTED_MODULE_0__["default"].get('access_token');
+      fetch('http://localhost:8000/api/target/', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      }).then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        if (!data.error) {
+          _this.targets = data;
+        } else {
+          alert(data.error);
+        }
+      });
+    }
   }
 });
 
@@ -5595,6 +5604,83 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/dist/js.cookie.mjs");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5602,9 +5688,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  mounted: function mounted() {
-    console.log('home');
+  data: function data() {
+    return {
+      targets: []
+    };
+  },
+  created: function created() {
+    this.appendTargets();
+  },
+  methods: {
+    appendTargets: function appendTargets(query, param, order) {
+      var _this = this;
+      var token = js_cookie__WEBPACK_IMPORTED_MODULE_0__["default"].get('access_token');
+      var params = '';
+      fetch("http://localhost:8000/api/target/".concat(params), {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      }).then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        if (!data.error) {
+          _this.targets = data;
+        } else {
+          alert(data.error);
+        }
+      });
+    }
   }
 });
 
@@ -5818,12 +5933,64 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/dist/js.cookie.mjs");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
 //
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+
+var token = js_cookie__WEBPACK_IMPORTED_MODULE_0__["default"].get('access_token');
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      categories: []
+    };
+  },
+  methods: {},
+  created: function created() {
+    var _this = this;
+    fetch('http://localhost:8000/api/category/', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      }
+    }).then(function (response) {
+      return response.json();
+    }).then(function (data) {
+      if (!data.error) {
+        _this.categories = data;
+      } else {
+        alert(data.error);
+      }
+    });
+  }
+});
 
 /***/ }),
 
@@ -5926,17 +6093,19 @@ __webpack_require__.r(__webpack_exports__);
     name: 'notfound',
     component: _pages_NotFound__WEBPACK_IMPORTED_MODULE_1__["default"]
   }, {
-    path: '/',
-    name: 'home',
-    component: _pages_Home__WEBPACK_IMPORTED_MODULE_0__["default"]
-  }, {
     path: '/login',
     name: 'login',
     component: _pages_Login__WEBPACK_IMPORTED_MODULE_5__["default"]
   }, {
+    path: '/',
+    name: 'home',
+    component: _pages_Home__WEBPACK_IMPORTED_MODULE_0__["default"],
+    beforeEnter: _services_middleware__WEBPACK_IMPORTED_MODULE_6__["default"].auth
+  }, {
     path: '/categories',
     name: 'categories',
-    component: _pages_categories__WEBPACK_IMPORTED_MODULE_2__["default"]
+    component: _pages_categories__WEBPACK_IMPORTED_MODULE_2__["default"],
+    beforeEnter: _services_middleware__WEBPACK_IMPORTED_MODULE_6__["default"].auth
   }, {
     path: '/target/:id',
     name: 'show-target',
@@ -29290,7 +29459,7 @@ var render = function () {
           staticClass: "nav-link fw-bolder fs-2 text-info",
           attrs: { to: { name: "home" }, exact: "" },
         },
-        [_vm._v("TargetManager\n        ")]
+        [_vm._v("TargetManager\n    ")]
       ),
       _vm._v(" "),
       _c("ul", { staticClass: "nav flex-column" }, [
@@ -29311,9 +29480,7 @@ var render = function () {
                     color: "cornflowerblue",
                   },
                 }),
-                _vm._v(
-                  " Adicionar\n                    Objetivo\n                "
-                ),
+                _vm._v(" Adicionar\n                Objetivo\n            "),
               ]
             ),
           ],
@@ -29337,13 +29504,34 @@ var render = function () {
                     color: "cornflowerblue",
                   },
                 }),
-                _vm._v(" Categorias\n                "),
+                _vm._v(" Categorias\n            "),
               ]
             ),
           ],
           1
         ),
       ]),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn d-flex align-items-center text-white w-100",
+          on: {
+            click: function ($event) {
+              return _vm.appendTargets()
+            },
+          },
+        },
+        [
+          _c("i", {
+            staticClass: "bi-arrow-clockwise me-2",
+            staticStyle: { "font-size": "1.5rem", color: "cornflowerblue" },
+          }),
+          _vm._v(" Atualizar\n    "),
+        ]
+      ),
       _vm._v(" "),
       _vm._l(_vm.targets, function (target) {
         return _vm.targets.length
@@ -29366,7 +29554,7 @@ var render = function () {
                         color: "cornflowerblue",
                       },
                     }),
-                    _vm._v(" " + _vm._s(target.title) + "\n            "),
+                    _vm._v(" " + _vm._s(target.title) + "\n        "),
                   ]
                 ),
               ],
@@ -29738,9 +29926,267 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    Home\n")])
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("section", { staticClass: "container" }, [
+      _c("table", { staticClass: "table table-light" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.targets, function (target) {
+            return _vm.targets.length
+              ? _c("tr", { key: target.id }, [
+                  _c("th", { attrs: { scope: "row" } }, [
+                    _vm._v(_vm._s(target.title)),
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center" }, [
+                    _vm._v(_vm._s(target.cost)),
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center" }, [
+                    _vm._v(_vm._s(target.gain)),
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center" }, [
+                    _vm._v(_vm._s(target.priority)),
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center" }, [
+                    _vm._v(_vm._s(target.deadline)),
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center" }, [
+                    _vm._v(_vm._s(target.sugested_priority)),
+                  ]),
+                ])
+              : _vm._e()
+          }),
+          0
+        ),
+      ]),
+    ]),
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("nav", { staticClass: "navbar navbar-expand-lg bg-light" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c(
+          "button",
+          {
+            staticClass: "navbar-toggler",
+            attrs: {
+              type: "button",
+              "data-bs-toggle": "collapse",
+              "data-bs-target": "#navbarSupportedContent",
+              "aria-controls": "navbarSupportedContent",
+              "aria-expanded": "false",
+              "aria-label": "Toggle navigation",
+            },
+          },
+          [_c("span", { staticClass: "navbar-toggler-icon" })]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "collapse navbar-collapse",
+            attrs: { id: "navbarSupportedContent" },
+          },
+          [
+            _c("ul", { staticClass: "navbar-nav me-auto mb-2 mb-lg-0" }, [
+              _c("li", { staticClass: "nav-item dropdown" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "nav-link dropdown-toggle",
+                    attrs: {
+                      href: "#",
+                      role: "button",
+                      "data-bs-toggle": "dropdown",
+                      "aria-expanded": "false",
+                    },
+                  },
+                  [
+                    _vm._v(
+                      "\n                            Ordenar por:\n                        "
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c("ul", { staticClass: "dropdown-menu" }, [
+                  _c("li", [
+                    _c(
+                      "a",
+                      { staticClass: "dropdown-item", attrs: { href: "#" } },
+                      [_vm._v("Crescente")]
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _c(
+                      "a",
+                      { staticClass: "dropdown-item", attrs: { href: "#" } },
+                      [_vm._v("Decrescente")]
+                    ),
+                  ]),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "nav-item dropdown" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "nav-link dropdown-toggle",
+                    attrs: {
+                      href: "#",
+                      role: "button",
+                      "data-bs-toggle": "dropdown",
+                      "aria-expanded": "false",
+                    },
+                  },
+                  [
+                    _vm._v(
+                      "\n                            Classificar por por:\n                        "
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c("ul", { staticClass: "dropdown-menu" }, [
+                  _c("li", [
+                    _c(
+                      "a",
+                      { staticClass: "dropdown-item", attrs: { href: "#" } },
+                      [_vm._v("Nome")]
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _c(
+                      "a",
+                      { staticClass: "dropdown-item", attrs: { href: "#" } },
+                      [_vm._v("Custo")]
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _c(
+                      "a",
+                      { staticClass: "dropdown-item", attrs: { href: "#" } },
+                      [_vm._v("Ganho")]
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _c(
+                      "a",
+                      { staticClass: "dropdown-item", attrs: { href: "#" } },
+                      [_vm._v("Prioridade")]
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _c(
+                      "a",
+                      { staticClass: "dropdown-item", attrs: { href: "#" } },
+                      [_vm._v("Prazo")]
+                    ),
+                  ]),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "nav-item dropdown" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "nav-link dropdown-toggle",
+                    attrs: {
+                      href: "#",
+                      role: "button",
+                      "data-bs-toggle": "dropdown",
+                      "aria-expanded": "false",
+                    },
+                  },
+                  [
+                    _vm._v(
+                      "\n                            Categoria:\n                        "
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c("ul", { staticClass: "dropdown-menu" }, [
+                  _c("li", [
+                    _c(
+                      "a",
+                      { staticClass: "dropdown-item", attrs: { href: "#" } },
+                      [_vm._v("Projeto")]
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [_c("hr", { staticClass: "dropdown-divider" })]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _c(
+                      "a",
+                      { staticClass: "dropdown-item", attrs: { href: "#" } },
+                      [_vm._v("Todas")]
+                    ),
+                  ]),
+                ]),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("form", { staticClass: "d-flex", attrs: { role: "search" } }, [
+              _c("input", {
+                staticClass: "form-control me-2",
+                attrs: {
+                  type: "search",
+                  placeholder: "Search",
+                  "aria-label": "Search",
+                },
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-success",
+                  attrs: { type: "submit" },
+                },
+                [_vm._v("Search")]
+              ),
+            ]),
+          ]
+        ),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Objetivo")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center" }, [_vm._v("Custo")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center" }, [_vm._v("Ganho")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center" }, [_vm._v("Prioridade")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center" }, [_vm._v("Prazo")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center" }, [_vm._v("Urgência")]),
+      ]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -29931,7 +30377,7 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "text-center" }, [
-    _c("h3", [_vm._v(_vm._s(_vm.target.title))]),
+    _c("h2", [_vm._v(_vm._s(_vm.target.title))]),
     _vm._v(" "),
     _c(
       "div",
@@ -30011,9 +30457,59 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("Categorias")])
+  return _c("div", { staticClass: "container" }, [
+    _c(
+      "div",
+      { staticClass: "row" },
+      _vm._l(_vm.categories, function (categoriy) {
+        return _c("div", { staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "card" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "p-1 d-flex justify-content-between align-items-center",
+              },
+              [
+                _c("h3", {}, [
+                  _c("i", { staticClass: "fs-1 bi bi-bookmark-fill" }),
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s(categoriy.title) +
+                      "\n                    "
+                  ),
+                ]),
+                _vm._v(" "),
+                _vm._m(0, true),
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _c("span", { staticClass: "badge bg-secondary" }, [
+                _vm._v(_vm._s(categoriy.category.title)),
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "card-text" }, [
+                _vm._v(_vm._s(categoriy.description)),
+              ]),
+            ]),
+          ]),
+        ])
+      }),
+      0
+    ),
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "btn" }, [
+      _c("i", { staticClass: "bi bi-pencil" }),
+    ])
+  },
+]
 render._withStripped = true
 
 

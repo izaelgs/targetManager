@@ -23,6 +23,11 @@ class Category extends Model
         return $this->hasMany(Category::class, 'categoryid', 'id');
     }
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'categoryid', 'id');
+    }
+
     public function target()
     {
         return $this->belongsToMany(Target::class);

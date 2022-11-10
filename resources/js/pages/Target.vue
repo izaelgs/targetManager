@@ -1,6 +1,6 @@
 <template>
     <div class="text-center">
-        <h3>{{ target.title }}</h3>
+        <h2>{{ target.title }}</h2>
         <div>
             <span v-for="category in target.categories" class="badge bg-primary">
                 {{ category.title }}

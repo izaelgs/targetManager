@@ -18,19 +18,21 @@ export default {
             component: NotFound,
         },
         {
-            path: '/',
-            name: 'home',
-            component: Home,
-        },
-        {
             path: '/login',
             name: 'login',
             component: Login,
         },
         {
+            path: '/',
+            name: 'home',
+            component: Home,
+            beforeEnter: Guard.auth
+        },
+        {
             path: '/categories',
             name: 'categories',
             component: categories,
+            beforeEnter: Guard.auth
         },
         {
             path: '/target/:id',

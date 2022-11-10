@@ -18302,7 +18302,7 @@ nav {
   grid-area: sidebar;
 }
 
-nav li a {
+nav.bg-primary li a {
   color: white !important;
 }
 
