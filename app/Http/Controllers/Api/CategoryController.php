@@ -36,7 +36,9 @@ class CategoryController extends Controller
             $data['user_id'] = auth('api')->user()->id;
 
             $category = auth('api')->user()->categories()->create($data);
-            return response()->json($category);
+            return response()->json([
+                'message' => 'Categoria Adicionada Com Sucesso!'
+            ]);
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 401);
         }
@@ -51,7 +53,7 @@ class CategoryController extends Controller
     public function show($id)
     {
         try {
-            $category = auth('api')->user()->categories()->with('categories','category')->find($id);
+            $category = auth('api')->user()->categories()->with('categories', 'category')->find($id);
             return response()->json($category);
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 401);
@@ -71,9 +73,7 @@ class CategoryController extends Controller
             $category = auth('api')->user()->categories()->find($id);
             $category->update($request->all());
             return response()->json([
-                'data' => [
-                    'msg' => 'categoria atualizada com suseso'
-                ]
+                'message' => 'Categoria Atualizada Com Sucesso!'
             ], 200);
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 401);
@@ -93,9 +93,7 @@ class CategoryController extends Controller
             $category->delete();
 
             return response()->json([
-                'data' => [
-                    'msg' => 'categoria deletada com suseso'
-                ]
+                'message' => 'Categoria Deletada Com Sucesso!'
             ], 200);
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 401);

@@ -61,7 +61,6 @@
 <script>
 
 import Cookie from 'js-cookie';
-const token = Cookie.get('access_token');
 
 export default {
     data() {
@@ -78,6 +77,26 @@ export default {
         }
     },
 
+    created() {
+        const token = Cookie.get('access_token');
+
+        fetch('http://localhost:8000/api/category/', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token,
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.error) {
+                    this.categories = data;
+                } else {
+                    alert(data.error);
+                }
+            })
+    },
 
     methods: {
         submit() {
@@ -118,27 +137,6 @@ export default {
             this.categories.find(c => c.id == this.selected_category).disabled = 'disabled';
         }
     },
-
-
-
-    created() {
-        fetch('http://localhost:8000/api/category/', {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token,
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (!data.error) {
-                    this.categories = data;
-                } else {
-                    alert(data.error);
-                }
-            })
-    }
 }
 
 function encodeUrl(payload) {
