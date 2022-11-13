@@ -1,43 +1,89 @@
 <template>
-    <nav class="bg-primary m-2 rounded-2 p-2">
-        <router-link :to="{ name: 'home' }" class="nav-link fw-bolder fs-2 text-info" exact>TargetManager
+    <nav
+        :class="[
+            'sidebar bg-primary m-2 rounded-2 p-2',
+            {'active': active}
+        ]"
+    >
+        <i @click="toggle"
+            :class="[
+                'toggle-sidebar bi pointer fs-1 px-2 text-dark position-absolute top-0 start-100 d-none',
+                active ? 'bi-x' : 'bi-list'
+            ]"
+        ></i>
+        <router-link
+            :to="{ name: 'home' }"
+            class="nav-link fw-bolder fs-2 text-info"
+            exact
+            >TargetManager
         </router-link>
         <ul class="nav flex-column">
             <li>
-                <router-link :to="{ name: 'new-target' }" class="nav-link d-flex align-items-center">
-                    <i class="bi-plus-circle me-2" style="font-size: 1.5rem; color: cornflowerblue;"></i> Adicionar
-                    Objetivo
+                <router-link
+                    :to="{ name: 'new-target' }"
+                    class="nav-link d-flex align-items-center"
+                >
+                    <i
+                        class="bi-plus-circle me-2"
+                        style="font-size: 1.5rem; color: cornflowerblue"
+                    ></i>
+                    Adicionar Objetivo
                 </router-link>
             </li>
             <li>
-                <router-link :to="{ name: 'categories' }" class="nav-link d-flex align-items-center">
-                    <i class="bi-tags me-2" style="font-size: 1.5rem; color: cornflowerblue;"></i> Categorias
+                <router-link
+                    :to="{ name: 'categories' }"
+                    class="nav-link d-flex align-items-center"
+                >
+                    <i
+                        class="bi-tags me-2"
+                        style="font-size: 1.5rem; color: cornflowerblue"
+                    ></i>
+                    Categorias
                 </router-link>
             </li>
         </ul>
-        <hr>
-        <button @click="appendTargets()" class="btn d-flex align-items-center text-white w-100">
-            <i class="bi-arrow-clockwise me-2" style="font-size: 1.5rem; color: cornflowerblue;"></i> Atualizar
+        <hr />
+        <button
+            @click="appendTargets()"
+            class="btn d-flex align-items-center text-white w-100"
+        >
+            <i
+                class="bi-arrow-clockwise me-2"
+                style="font-size: 1.5rem; color: cornflowerblue"
+            ></i>
+            Atualizar
         </button>
-        <ul v-if="targets.length" v-for="target in targets" class="nav flex-column" :key="target.id">
-            <router-link :to="{ path: '/target/' + target.id }" exact
-                class="nav-link d-flex align-items-center text-white">
-                <i class="bi-bullseye me-2" style="font-size: 1.5rem; color: cornflowerblue;"></i> {{ target.title
-                }}
+        <ul
+            v-if="targets.length"
+            v-for="target in targets"
+            class="nav flex-column"
+            :key="target.id"
+        >
+            <router-link
+                :to="{ path: '/target/' + target.id }"
+                exact
+                class="nav-link d-flex align-items-center text-white"
+            >
+                <i
+                    class="bi-bullseye me-2"
+                    style="font-size: 1.5rem; color: cornflowerblue"
+                ></i>
+                {{ target.title }}
             </router-link>
         </ul>
     </nav>
 </template>
 
 <script>
-
-import Cookie from 'js-cookie';
+import Cookie from "js-cookie";
 
 export default {
     data() {
         return {
-            targets: []
-        }
+            targets: [],
+            active: false,
+        };
     },
 
     created() {
@@ -46,25 +92,29 @@ export default {
 
     methods: {
         appendTargets() {
-            const token = Cookie.get('access_token');
+            const token = Cookie.get("access_token");
 
-            fetch('http://localhost:8000/api/target/', {
-                method: 'GET',
+            fetch("http://localhost:8000/api/target/", {
+                method: "GET",
                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token,
-                }
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + token,
+                },
             })
-                .then(response => response.json())
-                .then(data => {
+                .then((response) => response.json())
+                .then((data) => {
                     if (!data.error) {
                         this.targets = data;
                     } else {
                         alert(data.error);
                     }
-                })
+                });
+        },
+
+        toggle() {
+            this.active = !this.active;
         }
-    }
-}
+    },
+};
 </script>

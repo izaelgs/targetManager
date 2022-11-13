@@ -1,105 +1,204 @@
 <template>
     <div>
-        <section class="inscricao mb-2 rounded" id="estudante">
+        <section class="rounded">
             <h2>Adicionar Objetivo</h2>
-            <p>Um objetivo pode fazer parte de uma séria de categorias e conter diversas metas</p>
+            <p>
+                Um objetivo pode fazer parte de uma séria de categorias e conter
+                diversas metas
+            </p>
 
             <form @submit.stop.prevent="submit" class="row g-3">
-                <div class="col-md-6">
+                <div class="col-12">
                     <label for="title" class="form-label">Titulo</label>
-                    <input type="name" class="form-control" id="title" v-model="title" placeholder="insira um titulo">
+                    <input
+                        type="name"
+                        class="form-control"
+                        id="title"
+                        v-model="title"
+                        placeholder="insira um titulo"
+                    />
                 </div>
                 <div class="col-md-6">
                     <label for="categories" class="form-label">
-                        Categorias:
+                        Categoria:
                         <span
-                            v-if="selected_categories" v-for="category in selected_categories"
-                            class="badge bg-secondary"
+                            v-if="selected_categories"
+                            v-for="category in selected_categories"
+                            class="badge bg-secondary mx-1"
                         >
                             {{ category.title }}
+                            <i
+                                @click="removeCategory(category, categories, selected_categories)"
+                                class="bi bi-x-lg pointer"
+                            ></i>
                         </span>
                     </label>
-                    <select id="categories" @change="addCategory" v-model="selected_category" class="form-select">
+                    <select
+                        id="categories"
+                        @change="addCategory(categories , selected_categories, selected_category)"
+                        v-model="selected_category"
+                        class="form-select"
+                    >
                         <option value="" hidden>Seleciona Uma Categoria</option>
-                        <option v-if="categories" v-for="category in categories"
+                        <option
+                            v-if="categories"
+                            v-for="category in categories"
                             :value="category.id"
                             :key="category.id"
-                            :disabled="category.disabled">
+                            :disabled="category.disabled"
+                        >
+                            {{ category.title }}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="categories" class="form-label">
+                        SubCategoria:
+                        <span
+                            v-if="selected_subcategories"
+                            v-for="category in selected_subcategories"
+                            class="badge bg-secondary mx-1"
+                        >
+                            {{ category.title }}
+                            <i
+                                @click="removeCategory(category, subcategories, selected_subcategories)"
+                                class="bi bi-x-lg pointer"
+                            ></i>
+                        </span>
+                    </label>
+                    <select
+                        id="categories"
+                        @change="addCategory(subcategories , selected_subcategories, selected_subcategory)"
+                        v-model="selected_subcategory"
+                        class="form-select"
+                    >
+                        <option value="" hidden>Seleciona Uma Categoria</option>
+                        <option
+                            v-if="subcategories"
+                            v-for="category in subcategories"
+                            :value="category.id"
+                            :key="category.id"
+                            :disabled="category.disabled"
+                        >
                             {{ category.title }}
                         </option>
                     </select>
                 </div>
                 <div class="col-12">
-                    <label for="description" class="form-label">Descricao</label>
-                    <textarea class="form-control" id="description" v-model="description" rows="3"></textarea>
+                    <label for="description" class="form-label"
+                        >Descricao</label
+                    >
+                    <textarea
+                        class="form-control"
+                        id="description"
+                        v-model="description"
+                        rows="3"
+                    ></textarea>
                 </div>
                 <div class="col-md-6">
                     <label for="deadline" class="form-label">Prazo</label>
-                    <input type="date" class="form-control" id="deadline" v-model="deadline">
+                    <input
+                        type="date"
+                        class="form-control"
+                        id="deadline"
+                        v-model="deadline"
+                    />
                 </div>
                 <div class="col-md-6">
                     <label for="priority" class="form-label">Prioridade</label>
-                    <input type="number" class="form-control" id="priority" v-model="priority" min="0" max="10">
+                    <input
+                        type="number"
+                        class="form-control"
+                        id="priority"
+                        v-model="priority"
+                        min="0"
+                        max="10"
+                    />
                 </div>
                 <div class="col-md-6">
                     <label for="cost" class="form-label">Custo</label>
-                    <input type="number" class="form-control" id="cost" v-model="cost" min="0" max="10">
+                    <input
+                        type="number"
+                        class="form-control"
+                        id="cost"
+                        v-model="cost"
+                        min="0"
+                        max="10"
+                    />
                 </div>
                 <div class="col-md-6">
                     <label for="gain" class="form-label">Ganho</label>
-                    <input type="number" class="form-control" id="gain" v-model="gain" min="0" max="10">
+                    <input
+                        type="number"
+                        class="form-control"
+                        id="gain"
+                        v-model="gain"
+                        min="0"
+                        max="10"
+                    />
                 </div>
                 <div class="col-12 d-grid gap-2">
-                    <button type="submit" class="btn btn-secondary">Cadastrar</button>
+                    <button type="submit" class="btn btn-secondary">
+                        Cadastrar
+                    </button>
                 </div>
             </form>
         </section>
-
     </div>
 </template>
 
 <script>
-
-import Cookie from 'js-cookie';
+import Cookie from "js-cookie";
 
 export default {
     data() {
         return {
             categories: [],
+            subcategories: [],
+
             selected_categories: [],
-            selected_category: '',
-            title: '',
-            deadline: '',
-            description: '',
+            selected_category: "",
+
+            selected_subcategories: [],
+            selected_subcategory: "",
+
+            title: "",
+            deadline: "",
+            description: "",
             cost: 0,
             gain: 0,
             priority: 0,
-        }
+
+            access_token: "",
+        };
     },
 
     created() {
-        const token = Cookie.get('access_token');
+        this.access_token = Cookie.get("access_token");
 
-        fetch('http://localhost:8000/api/category/', {
-            method: 'GET',
+        fetch("http://localhost:8000/api/category/categories", {
+            method: "GET",
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token,
-            }
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + this.access_token,
+            },
         })
-            .then(response => response.json())
-            .then(data => {
+            .then((response) => response.json())
+            .then((data) => {
                 if (!data.error) {
                     this.categories = data;
                 } else {
                     alert(data.error);
                 }
-            })
+            });
     },
 
     methods: {
         submit() {
+
+            this.selected_categories = this.selected_categories.concat(this.selected_subcategories);
+
             const payload = encodeUrl({
                 title: this.title,
                 deadline: this.deadline,
@@ -107,37 +206,67 @@ export default {
                 cost: this.cost,
                 gain: this.gain,
                 priority: this.priority,
-                'categories[]': this.selected_categories.map(category => { return category.id }),
+                "categories[]": this.selected_categories.map((category) => {
+                    return category.id;
+                }),
             });
 
-            fetch('http://127.0.0.1:8000/api/target', {
-                method: 'POST',
+            fetch("http://127.0.0.1:8000/api/target", {
+                method: "POST",
                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization': 'Bearer ' + token,
+                    Accept: "application/json",
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    Authorization: "Bearer " + this.access_token,
                 },
-                body: payload
+                body: payload,
             })
-                .then(response => response.json())
-                .then(data => {
+                .then((response) => response.json())
+                .then((data) => {
+
+
                     if (!data.error) {
-                        alert('coisado kkk');
+                        this.selected_categories = this.selected_subcategories = [];
+                        this.title = this.deadline = this.description = this.cost = this.gain = this.priority = "";
+                        alert("coisado kkk");
                     } else {
                         console.log(data.error);
                     }
-                })
+                });
         },
 
-        addCategory() {
+        addCategory(categories , selected_categories, selected_category) {
+            let category = categories.find(
+                (c) => c.id == selected_category
+            );
+            selected_categories.push(category);
 
-            let category = this.categories.find(c => c.id == this.selected_category);
-            this.selected_categories.push(category);
+            if(category.is_father) this.subcategories = this.subcategories.concat(category.categories)
 
-            this.categories.find(c => c.id == this.selected_category).disabled = 'disabled';
-        }
+            categories.find(
+                (c) => c.id == selected_category
+            ).disabled = "disabled";
+        },
+
+        removeCategory(category, categories, selected_categories) {
+            const index = selected_categories.indexOf(category);
+            if (index > -1) { // only splice array when item is found
+                selected_categories.splice(index, 1); // 2nd parameter means remove one item only
+            }
+
+            if(category.is_father) { // add subcategories on subcategories input
+                this.subcategories = this.subcategories.filter(subcategory => !category.categories.includes(subcategory));
+                this.selected_subcategories = this.selected_subcategories.filter(subcategory => !category.categories.includes(subcategory))
+                category.categories.forEach(subcategory => {
+                    subcategory.disabled = null;
+                });
+            }
+
+            categories.find(
+                (c) => c.id == category.id
+            ).disabled = null;
+        },
     },
-}
+};
 
 function encodeUrl(payload) {
     var formBody = [];

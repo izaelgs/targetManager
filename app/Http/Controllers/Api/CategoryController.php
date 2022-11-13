@@ -23,6 +23,24 @@ class CategoryController extends Controller
         }
     }
 
+    public function indexPivot()
+    {
+        try {
+            return auth('api')->user()->categories()->with('categories')->where('categoryid', null)->get();
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), 401);
+        }
+    }
+
+    public function indexFather()
+    {
+        try {
+            return auth('api')->user()->categories()->where('categoryid', null)->get();
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), 401);
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *

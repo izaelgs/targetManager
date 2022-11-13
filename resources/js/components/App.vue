@@ -1,7 +1,7 @@
 <template>
     <main>
         <Sidebar></Sidebar>
-        <content class="m-2">
+        <content class="m-2 bg-light rounded p-md-4">
             <router-view></router-view>
         </content>
         <footer class="bg-dark m-2 rounded-2 text-light text-center">

@@ -18279,6 +18279,28 @@ main {
 }
 
 @media only screen and (max-width: 600px) {
+  main {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 64px;
+    grid-template-areas: "content" "footer";
+    height: 100vh;
+    margin: 0;
+  }
+  main .sidebar {
+    position: fixed;
+    height: 90vh;
+    z-index: 10;
+    width: 250px;
+    left: -255px;
+    transition: 0.8s;
+  }
+  main .sidebar .toggle-sidebar {
+    display: block !important;
+  }
+  main .active {
+    left: 0;
+  }
   .form-signin {
     width: 80%;
   }
@@ -18314,4 +18336,8 @@ content {
 
 footer {
   grid-area: footer;
+}
+
+.pointer {
+  cursor: pointer;
 }

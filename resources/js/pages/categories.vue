@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="">
         <div class="row">
             <div v-if="categories" v-for="categoriy in categories" class="col-md-4 mb-2 mb-md-3">
                 <div :class="['card', {'bg-secondary': !categoriy.is_father}]">
@@ -46,8 +46,8 @@
                         <select v-model="categoryid" class="form-control">
                             <option value="">Seleciona Uma Categoria</option>
                             <option
-                                v-if="categories"
-                                v-for="category in categories"
+                                v-if="father_categories"
+                                v-for="category in father_categories"
                                 :value="category.id"
                                 :key="category.id"
                             >
@@ -85,6 +85,12 @@ export default {
 
             access_token: "",
         };
+    },
+
+    computed: {
+        father_categories() {
+            return this.categories.filter(category => category.is_father);
+        }
     },
 
     created() {
