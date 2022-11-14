@@ -18,6 +18,17 @@
                         placeholder="insira um titulo"
                     />
                 </div>
+                <div class="col-12">
+                    <label for="description" class="form-label"
+                        >Descricao</label
+                    >
+                    <textarea
+                        class="form-control"
+                        id="description"
+                        v-model="description"
+                        rows="3"
+                    ></textarea>
+                </div>
                 <div class="col-md-6">
                     <label for="categories" class="form-label">
                         Categoria:
@@ -83,17 +94,6 @@
                             {{ category.title }}
                         </option>
                     </select>
-                </div>
-                <div class="col-12">
-                    <label for="description" class="form-label"
-                        >Descricao</label
-                    >
-                    <textarea
-                        class="form-control"
-                        id="description"
-                        v-model="description"
-                        rows="3"
-                    ></textarea>
                 </div>
                 <div class="col-md-6">
                     <label for="deadline" class="form-label">Prazo</label>

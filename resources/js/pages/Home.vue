@@ -2,69 +2,6 @@
     <div class="row">
         <div class="col-md-9">
             <div class="row">
-                <ul class="col-12 col-lg-6 nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item dropdown">
-                        <a
-                            class="nav-link dropdown-toggle"
-                            href="#"
-                            role="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                        >
-                            Ordenar por:
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item" href="#"
-                                    >Crescente</a
-                                >
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#"
-                                    >Decrescente</a
-                                >
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a
-                            class="nav-link dropdown-toggle"
-                            href="#"
-                            role="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                        >
-                            Classificar por por:
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item" href="#"
-                                    >Nome</a
-                                >
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#"
-                                    >Custo</a
-                                >
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#"
-                                    >Ganho</a
-                                >
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#"
-                                    >Prioridade</a
-                                >
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#"
-                                    >Prazo</a
-                                >
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
                 <form class="col d-flex" role="search">
                     <input
                         class="form-control me-2"
@@ -72,10 +9,7 @@
                         placeholder="Search"
                         aria-label="Search"
                     />
-                    <button
-                        class="btn btn-outline-success"
-                        type="submit"
-                    >
+                    <button class="btn btn-outline-success" type="submit">
                         Search
                     </button>
                 </form>
@@ -83,12 +17,24 @@
             <table class="table table-light">
                 <thead>
                     <tr>
-                        <th>Objetivo</th>
-                        <th class="text-center">Custo</th>
-                        <th class="text-center">Ganho</th>
-                        <th class="text-center">Prioridade</th>
-                        <th class="text-center">Prazo</th>
-                        <th class="text-center">Urgência</th>
+                        <th @click="changeField('title')" class="pointer">
+                            Objetivo <i v-show="field == 'title'" :class="['bi', order ? 'bi-caret-up-fill' : 'bi-caret-down-fill']"></i>
+                        </th>
+                        <th @click="changeField('cost')" class="pointer text-center">
+                            Custo <i v-show="field == 'cost'" :class="['bi', order ? 'bi-caret-up-fill' : 'bi-caret-down-fill']"></i>
+                        </th>
+                        <th @click="changeField('gain')" class="pointer text-center">
+                            Ganho <i v-show="field == 'gain'" :class="['bi', order ? 'bi-caret-up-fill' : 'bi-caret-down-fill']"></i>
+                        </th>
+                        <th @click="changeField('priority')" class="pointer text-center">
+                            Prioridade <i v-show="field == 'priority'" :class="['bi', order ? 'bi-caret-up-fill' : 'bi-caret-down-fill']"></i>
+                        </th>
+                        <th @click="changeField('deadline')" class="pointer text-center">
+                            Prazo <i v-show="field == 'deadline'" :class="['bi', order ? 'bi-caret-up-fill' : 'bi-caret-down-fill']"></i>
+                        </th>
+                        <th @click="changeField('sugested_priority')" class="pointer text-center">
+                            Urgência <i v-show="field == 'sugested_priority'" :class="['bi', order ? 'bi-caret-up-fill' : 'bi-caret-down-fill']"></i>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -111,7 +57,7 @@
         </div>
         <div class="col-md-3">
             <div class="card">
-                <div class="card-header">Categoria</div>
+                <div class="card-header pointer" @click="fetchTargets">Categoria</div>
                 <div class="accordion accordion-flush" id="accordionCategories">
                     <div
                         class="accordion-item"
@@ -123,6 +69,7 @@
                             :id="'flush-heading' + category.id"
                         >
                             <button
+                                @click="reloadTargets(category.id)"
                                 class="accordion-button collapsed"
                                 type="button"
                                 data-bs-toggle="collapse"
@@ -149,8 +96,11 @@
                                         class="list-group-item"
                                     >
                                         <a
+                                            @click.prevent="
+                                                reloadTargets(subcategory.id)
+                                            "
                                             href=""
-                                            class="btn d-flex align-items-center w-100"
+                                            :class="['btn d-flex align-items-center w-100', {'bg-primary text-light': selected_subcategory == subcategory.id}]"
                                         >
                                             <i class="bi bi-bookmark"></i>
                                             {{ subcategory.title }}
@@ -174,6 +124,12 @@ export default {
         return {
             targets: [],
             categories: [],
+
+            selected_subcategory: "",
+
+            order: false,
+            field: "title",
+
             access_token: "",
         };
     },
@@ -187,6 +143,7 @@ export default {
     methods: {
         fetchTargets() {
             let params = "";
+            this.selected_subcategory = '';
 
             fetch(`http://localhost:8000/api/target/${params}`, {
                 method: "GET",
@@ -200,6 +157,33 @@ export default {
                 .then((data) => {
                     if (!data.error) {
                         this.targets = data;
+                        this.targets.sort(
+                            compareValues(this.field, this.order)
+                        );
+                    } else {
+                        alert(data.error);
+                    }
+                });
+        },
+
+        reloadTargets(categotyid) {
+            this.selected_subcategory = categotyid;
+
+            fetch(`http://localhost:8000/api/category/${categotyid}/targets`, {
+                method: "GET",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + this.access_token,
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (!data.error) {
+                        this.targets = data;
+                        this.targets.sort(
+                            compareValues(this.field, this.order)
+                        );
                     } else {
                         alert(data.error);
                     }
@@ -224,6 +208,35 @@ export default {
                     }
                 });
         },
+
+        changeField(field) {
+            this.field == field ?
+                this.order = !this.order :
+                this.field = field;
+            this.targets.sort(
+                compareValues(this.field, this.order)
+            );
+        }
     },
 };
+
+function compareValues(key, order) {
+    return function innerSort(a, b) {
+        if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+            // property doesn't exist on either object
+            return 0;
+        }
+
+        const varA = typeof a[key] === "string" ? a[key].toUpperCase() : a[key];
+        const varB = typeof b[key] === "string" ? b[key].toUpperCase() : b[key];
+
+        let comparison = 0;
+        if (varA > varB) {
+            comparison = 1;
+        } else if (varA < varB) {
+            comparison = -1;
+        }
+        return order ? comparison * -1 : comparison;
+    };
+}
 </script>

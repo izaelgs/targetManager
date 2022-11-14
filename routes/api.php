@@ -24,6 +24,7 @@ Route::namespace('App\Http\Controllers\Api')->group(function() {
     // Route::post('login', 'Auth\LoginJwtController@login');
 
     Route::group(['middleware' => 'jwt.auth'], function() {
+        Route::get('category/{id}/targets', 'CategoryController@targets');
         Route::get('category/categories', 'CategoryController@indexPivot');
         Route::get('category/father', 'CategoryController@indexFather');
         Route::resource('category', 'CategoryController');

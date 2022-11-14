@@ -1,7 +1,9 @@
 window._ = require('lodash');
-window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
+window.bootstrap = require('bootstrap');
+window.$ = window.jQuery = require('jquery');
 
 try {
+    require('jquery');
     require('bootstrap');
 } catch (e) {
     console.log(e)

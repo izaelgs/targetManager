@@ -78,6 +78,16 @@ class CategoryController extends Controller
         }
     }
 
+    public function targets($id)
+    {
+        try {
+            $category = auth('api')->user()->categories()->findOrFail($id);
+            return response()->json($category->targets);
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), 401);
+        }
+    }
+
     /**
      * Update the specified resource in storage.
      *

@@ -28,7 +28,7 @@ class Category extends Model
         return $this->belongsTo(Category::class, 'categoryid', 'id');
     }
 
-    public function target()
+    public function targets()
     {
         return $this->belongsToMany(Target::class);
     }

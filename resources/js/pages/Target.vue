@@ -2,7 +2,10 @@
     <div class="text-center">
         <h2>{{ target.title }}</h2>
         <div>
-            <span v-for="category in target.categories" class="badge bg-primary">
+            <span
+                v-for="category in target.categories"
+                class="badge bg-primary"
+            >
                 {{ category.title }}
             </span>
         </div>
@@ -31,15 +34,14 @@
 </template>
 
 <script>
-
-import Cookie from 'js-cookie';
-const token = Cookie.get('access_token');
+import Cookie from "js-cookie";
 
 export default {
     data() {
         return {
-            target: {}
-        }
+            target: {},
+            token: "",
+        };
     },
 
     created() {
@@ -48,30 +50,31 @@ export default {
             (toParams, previousParams) => {
                 this.getContent();
             }
-        )
+        );
+        this.token = Cookie.get("access_token");
 
         this.getContent();
     },
 
     methods: {
         getContent() {
-            fetch('http://localhost:8000/api/target/' + this.$route.params.id, {
-                method: 'GET',
+            fetch("http://localhost:8000/api/target/" + this.$route.params.id, {
+                method: "GET",
                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token,
-                }
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + this.token,
+                },
             })
-                .then(response => response.json())
-                .then(data => {
+                .then((response) => response.json())
+                .then((data) => {
                     if (!data.error) {
                         this.target = data;
                     } else {
                         alert(data.error);
                     }
-                })
-        }
-    }
-}
+                });
+        },
+    },
+};
 </script>
