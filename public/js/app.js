@@ -41455,7 +41455,7 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
+  return _c("div", { staticClass: "row flex-md-row flex-column-reverse" }, [
     _c("div", { staticClass: "col-md-9" }, [
       _vm._m(0),
       _vm._v(" "),
@@ -41523,7 +41523,7 @@ var render = function () {
             _c(
               "th",
               {
-                staticClass: "pointer text-center",
+                staticClass: "pointer text-center d-none d-md-block",
                 on: {
                   click: function ($event) {
                     return _vm.changeField("gain")
@@ -41581,7 +41581,7 @@ var render = function () {
             _c(
               "th",
               {
-                staticClass: "pointer text-center",
+                staticClass: "pointer text-center d-none d-md-block",
                 on: {
                   click: function ($event) {
                     return _vm.changeField("deadline")
@@ -41651,7 +41651,7 @@ var render = function () {
                     _vm._v(_vm._s(target.cost)),
                   ]),
                   _vm._v(" "),
-                  _c("td", { staticClass: "text-center" }, [
+                  _c("td", { staticClass: "text-center d-none d-md-block" }, [
                     _vm._v(_vm._s(target.gain)),
                   ]),
                   _vm._v(" "),
@@ -41659,7 +41659,7 @@ var render = function () {
                     _vm._v(_vm._s(target.priority)),
                   ]),
                   _vm._v(" "),
-                  _c("td", { staticClass: "text-center" }, [
+                  _c("td", { staticClass: "text-center d-none d-md-block" }, [
                     _vm._v(_vm._s(target.deadline)),
                   ]),
                   _vm._v(" "),
@@ -41679,7 +41679,7 @@ var render = function () {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "col-md-3" }, [
-      _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card mb-2" }, [
         _c(
           "div",
           {

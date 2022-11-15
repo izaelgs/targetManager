@@ -97,6 +97,10 @@ content {
     overflow-y: auto;
 }
 
+tr, tbody {
+    transition: 0.8s;
+}
+
 footer {
     grid-area: footer;
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+    <div class="row flex-md-row flex-column-reverse">
         <div class="col-md-9">
             <div class="row">
                 <form class="col d-flex" role="search">
@@ -23,13 +23,13 @@
                         <th @click="changeField('cost')" class="pointer text-center">
                             Custo <i v-show="field == 'cost'" :class="['bi', order ? 'bi-caret-up-fill' : 'bi-caret-down-fill']"></i>
                         </th>
-                        <th @click="changeField('gain')" class="pointer text-center">
+                        <th @click="changeField('gain')" class="pointer text-center d-none d-md-block">
                             Ganho <i v-show="field == 'gain'" :class="['bi', order ? 'bi-caret-up-fill' : 'bi-caret-down-fill']"></i>
                         </th>
                         <th @click="changeField('priority')" class="pointer text-center">
                             Prioridade <i v-show="field == 'priority'" :class="['bi', order ? 'bi-caret-up-fill' : 'bi-caret-down-fill']"></i>
                         </th>
-                        <th @click="changeField('deadline')" class="pointer text-center">
+                        <th @click="changeField('deadline')" class="pointer text-center d-none d-md-block">
                             Prazo <i v-show="field == 'deadline'" :class="['bi', order ? 'bi-caret-up-fill' : 'bi-caret-down-fill']"></i>
                         </th>
                         <th @click="changeField('sugested_priority')" class="pointer text-center">
@@ -45,9 +45,9 @@
                     >
                         <th scope="row">{{ target.title }}</th>
                         <td class="text-center">{{ target.cost }}</td>
-                        <td class="text-center">{{ target.gain }}</td>
+                        <td class="text-center d-none d-md-block">{{ target.gain }}</td>
                         <td class="text-center">{{ target.priority }}</td>
-                        <td class="text-center">{{ target.deadline }}</td>
+                        <td class="text-center d-none d-md-block">{{ target.deadline }}</td>
                         <td class="text-center">
                             {{ target.sugested_priority }}
                         </td>
@@ -56,7 +56,7 @@
             </table>
         </div>
         <div class="col-md-3">
-            <div class="card">
+            <div class="card mb-2">
                 <div class="card-header pointer" @click="fetchTargets">Categoria</div>
                 <div class="accordion accordion-flush" id="accordionCategories">
                     <div
