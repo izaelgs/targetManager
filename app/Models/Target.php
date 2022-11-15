@@ -24,4 +24,9 @@ class Target extends Model
     {
         return $this->belongsToMany(Category::class);
     }
+
+    public function stages()
+    {
+        return $this->hasMany(Stage::class);
+    }
 }

@@ -26,9 +26,9 @@ class CreateStagesTable extends Migration
             $table->string('title');
             $table->text('description');
             $table->date('deadline');
-            $table->date('tolerance');
+            $table->tinyInteger('tolerance');
             $table->tinyInteger('complexity');
-            $table->boolean('status');
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\stageRequest;
+use App\Models\Stage;
 use Illuminate\Http\Request;
 
 class StageController extends Controller
@@ -14,7 +16,13 @@ class StageController extends Controller
      */
     public function index()
     {
-        //
+        // try {
+        //     return auth('api')->user()->targets()->stages;
+        // } catch (\Throwable $th) {
+        //     return response()->json($th->getMessage(), 401);
+        // }
+
+            return response()->json('aaaaaaaaaaaaaaaaaaa meu ombro ta doendo', 401);
     }
 
     /**
@@ -23,9 +31,17 @@ class StageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(stageRequest $request)
     {
-        //
+        try {
+            $data = $request->all();
+
+            $target = Stage::create($data);
+
+            return response()->json($target);
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), 401);
+        }
     }
 
     /**
@@ -46,9 +62,20 @@ class StageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(stageRequest $request, $id)
     {
-        //
+        try {
+            $stage = Stage::find($id);
+            $stage->update($request->all());
+
+            return response()->json([
+                'data' => [
+                    'msg' => 'etapa atualizada com suseso'
+                ]
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), 401);
+        }
     }
 
     /**
@@ -59,6 +86,17 @@ class StageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $stage = Stage::find($id);
+            $stage->delete();
+
+            return response()->json([
+                'data' => [
+                    'msg' => 'etapa deletada com suseso'
+                ]
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), 401);
+        }
     }
 }
