@@ -53,7 +53,7 @@ class TargetController extends Controller
     public function show($id)
     {
         try {
-            $target = auth('api')->user()->targets()->with('categories')->find($id);
+            $target = auth('api')->user()->targets()->with('categories', 'stages')->find($id);
             return response()->json($target);
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 401);
