@@ -97,6 +97,11 @@ content {
     overflow-y: auto;
 }
 
+.list-group-btn:hover {
+    --bs-bg-opacity: 0.2;
+    background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity));
+}
+
 tr, tbody {
     transition: 0.8s;
 }

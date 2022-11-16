@@ -100,7 +100,7 @@
                                                 reloadTargets(subcategory.id)
                                             "
                                             href=""
-                                            :class="['btn d-flex align-items-center w-100', {'bg-primary text-light': selected_subcategory == subcategory.id}]"
+                                            :class="['btn list-group-btn d-flex align-items-center w-100', {'bg-primary text-light': selected_subcategory == subcategory.id}]"
                                         >
                                             <i class="bi bi-bookmark"></i>
                                             {{ subcategory.title }}
