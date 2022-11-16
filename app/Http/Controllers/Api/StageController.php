@@ -74,6 +74,21 @@ class StageController extends Controller
         }
     }
 
+    public function patch(Request $request, $id)
+    {
+        try {
+            $data = $request->all();
+            $stage = Stage::find($id);
+            $stage->update($data);
+
+            $message = $data['status'] ? 'Concluída' : 'Reativada';
+
+            return response()->json(['message' => 'Etapa ' . $message], 200);
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), 401);
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      *

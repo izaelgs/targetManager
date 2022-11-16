@@ -37,9 +37,10 @@
                 class="list-group-item card bg-secondary text-light my-2 d-flex flex-row align-items-center"
             >
                 <input
+                    v-model="stage.status"
+                    @change="checkStage(stage)"
                     class="form-check-input me-1 pointer"
                     type="checkbox"
-                    value=""
                 />
                 <div class="vr me-2"></div>
                 <div class="w-100">
@@ -86,28 +87,34 @@
                                 rows="5"
                             ></textarea>
                         </div>
-                        <div class="col">
+                        <div class="col col-md-4">
+                            <label for="deadline" class="mt-1">Prazo:</label>
                             <input
                                 v-model="stage.deadline"
                                 type="date"
-                                class="form-control my-1"
+                                class="form-control mb-1"
+                                id="deadline"
                             />
                         </div>
-                        <div class="col-6">
+                        <div class="col-6 col-md-4">
+                            <label for="complexity" class="mt-1">Complexidade:</label>
                             <input
                                 v-model="stage.complexity"
                                 type="number"
-                                class="form-control my-1"
+                                class="form-control mb-1"
+                                id="complexity"
                             />
                         </div>
-                        <div class="col-6">
+                        <div class="col-6 col-md-4">
+                            <label for="tolerance" class="mt-1">Tolerância:</label>
                             <input
                                 v-model="stage.tolerance"
                                 type="number"
-                                class="form-control my-1"
+                                class="form-control mb-1"
+                                id="tolerance"
                             />
                         </div>
-                        <div class="d-grid gap-2">
+                        <div class="d-grid gap-2 mt-2">
                             <button class="btn btn-primary" type="submit">
                                 Salvar
                             </button>
@@ -161,6 +168,37 @@ export default {
     methods: {
         edit_stage(stage) {
             stage.edit = !stage.edit;
+        },
+
+        checkStage(stage) {
+            const payload = {
+                status: stage.status ? 1 : 0,
+            };
+
+            fetch("http://127.0.0.1:8000/api/stage/" + stage.id, {
+                method: "PATCH",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + this.access_token,
+                },
+                body: JSON.stringify(payload),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (!data.errors) {
+                        let emojis = stage.status ?
+                            ['emoji-heart-eyes', 'emoji-laughing', 'emoji-sunglasses'] :
+                            ['emoji-expressionless', 'emoji-frown', 'heartbreak'];
+
+                        this.showToast(data.message, "success", `${this.getEmoji(emojis)} text-body fs-5`);
+                        this.fetchData();
+                    } else {
+                        Object.entries(data.errors).forEach(error => {
+                            this.showToast(error[0], "danger", 'exclamation-triangle-fill');
+                        });
+                    }
+                });
         },
 
         submitEdit(stage) {

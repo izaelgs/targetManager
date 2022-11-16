@@ -10,6 +10,11 @@ export default{methods: {
         );
     },
 
+    getEmoji(emojis) {
+        let indice = Math.floor(Math.random() * emojis.length);
+        return `${emojis[indice]}-fill`;
+    },
+
     appendToast(mensagem, status, icon) {
         return new Promise((resolve, reject) => {
             let toast = document.createElement("div");

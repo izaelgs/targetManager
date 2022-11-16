@@ -29,6 +29,7 @@ Route::namespace('App\Http\Controllers\Api')->group(function() {
         Route::get('category/father', 'CategoryController@indexFather');
         Route::resource('category', 'CategoryController');
         Route::resource('target', 'TargetController');
+        Route::patch('stage/{id}', 'StageController@patch');
         Route::resource('stage', 'StageController');
     });
 
