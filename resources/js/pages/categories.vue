@@ -110,6 +110,7 @@
 
 <script>
 import Cookie from "js-cookie";
+import AppendToast from "../mixins/appendToast.vue";
 
 export default {
     data() {
@@ -213,19 +214,12 @@ export default {
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    if (!data.error) {
-                        this.appendToast(data.message,"success")
-                        .then((element) => {
-                            const toast = new bootstrap.Toast(element);
-                            toast.show();
-                        });
-
+                    if (!data.errors) {
+                        this.showToast(data.message,"success");
                         this.fetchData();
                     } else {
-                        this.appendToast(data.error,"danger")
-                        .then((element) => {
-                            const toast = new bootstrap.Toast(element);
-                            toast.show();
+                        Object.entries(data.errors).forEach(error => {
+                            this.showToast(error, "danger", 'exclamation-triangle-fill');
                         });
                     }
                 });
@@ -250,36 +244,12 @@ export default {
                             return category;
                         });
                     } else {
-                        alert(data.error);
+                        this.showToast(data.error ?? 'Erro desconhecido', 'danger', 'exclamation-octagon-fill');
                     }
                 });
         },
-
-        appendToast(mensagem, status) {
-            return new Promise((resolve, reject) => {
-                let toast = document.createElement("div");
-
-                toast.classList.add("toast");
-                toast.id = "liveToast";
-                toast.role = "alert";
-                toast.setAttribute("aria-live", "assertive");
-                toast.setAttribute("aria-atomic", "true");
-
-                toast.innerHTML = `
-                <div class="toast-header  bg-${status} text-light">
-                    <strong class="me-auto">TargetManager</strong>
-                    <small>Agora</small>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-                <div class="toast-body">
-                    ${mensagem}
-                </div>`;
-
-                document.querySelector(".toast-container").append(toast);
-
-                resolve(toast);
-            });
-        },
     },
+
+    mixins: [AppendToast],
 };
 </script>

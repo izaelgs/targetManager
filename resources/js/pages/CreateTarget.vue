@@ -149,6 +149,7 @@
 
 <script>
 import Cookie from "js-cookie";
+import AppendToast from "../mixins/appendToast.vue";
 
 export default {
     data() {
@@ -224,12 +225,14 @@ export default {
                 .then((data) => {
 
 
-                    if (!data.error) {
+                    if (!data.errors) {
                         this.selected_categories = this.selected_subcategories = [];
                         this.title = this.deadline = this.description = this.cost = this.gain = this.priority = "";
-                        alert("coisado kkk");
+                        this.showToast(data.message, "success");
                     } else {
-                        console.log(data.error);
+                        Object.entries(data.errors).forEach(error => {
+                            this.showToast(error[1], "danger", 'exclamation-triangle-fill');
+                        });
                     }
                 });
         },
@@ -266,6 +269,8 @@ export default {
             ).disabled = null;
         },
     },
+
+    mixins: [AppendToast]
 };
 
 function encodeUrl(payload) {

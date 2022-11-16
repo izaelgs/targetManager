@@ -1,6 +1,16 @@
 <script>
 export default{methods: {
-    appendToast(mensagem, status) {
+
+    showToast(mensagem, status, icon = null) {
+        this.appendToast(mensagem, status, icon).then(
+            (element) => {
+                const toast = new bootstrap.Toast(element);
+                toast.show();
+            }
+        );
+    },
+
+    appendToast(mensagem, status, icon) {
         return new Promise((resolve, reject) => {
             let toast = document.createElement("div");
 
@@ -10,6 +20,8 @@ export default{methods: {
             toast.setAttribute("aria-live", "assertive");
             toast.setAttribute("aria-atomic", "true");
 
+            icon = icon ? `<i class="bi bi-${icon} text-${status}"></i>  ` : '';
+
             toast.innerHTML = `
             <div class="toast-header  bg-${status} text-light">
                 <strong class="me-auto">TargetManager</strong>
@@ -17,7 +29,7 @@ export default{methods: {
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
             <div class="toast-body">
-                ${mensagem}
+                ${icon}${mensagem}
             </div>`;
 
             document.querySelector(".toast-container").append(toast);

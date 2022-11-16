@@ -185,22 +185,13 @@ export default {
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    if (!data.error) {
-                        this.appendToast(data.message, "success").then(
-                            (element) => {
-                                const toast = new bootstrap.Toast(element);
-                                toast.show();
-                            }
-                        );
-
+                    if (!data.errors) {
+                        this.showToast(data.message, "success");
                         this.fetchData();
                     } else {
-                        this.appendToast(data.error, "danger").then(
-                            (element) => {
-                                const toast = new bootstrap.Toast(element);
-                                toast.show();
-                            }
-                        );
+                        Object.entries(data.errors).forEach(error => {
+                            this.showToast(error[0], "danger", 'exclamation-triangle-fill');
+                        });
                     }
                 });
         },
@@ -222,8 +213,10 @@ export default {
                             // only splice array when item is found
                             this.target.stages.splice(index, 1); // 2nd parameter means remove one item only
                         }
+
+                        this.showToast(data.message, "success");
                     } else {
-                        alert(data.error);
+                        this.showToast(data.error, "danger");
                     }
                 });
         },
@@ -246,7 +239,7 @@ export default {
                         });
                         this.target = data;
                     } else {
-                        alert(data.error);
+                        this.showToast(data.error, "danger", 'exclamation-octagon-fill');
                     }
                 });
         },

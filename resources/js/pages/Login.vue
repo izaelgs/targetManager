@@ -21,6 +21,7 @@
 <script>
 
 import Cookie from 'js-cookie';
+import AppendToast from '../mixins/appendToast.vue';
 
 export default {
     data() {
@@ -56,11 +57,13 @@ export default {
                     Cookie.set('access_token', data.access_token);
                     this.$router.push('/');
                 } else {
-                    console.log(data.error);
+                    this.showToast(data.error == 'Unauthorized' ? 'E-mail ou Senha incorretos' : 'Erro desconhecido', 'danger');
                 }
             })
         },
-    }
+    },
+
+    mixins: [AppendToast]
 }
 
 </script>
