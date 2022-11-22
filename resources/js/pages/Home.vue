@@ -1,5 +1,6 @@
 <template>
     <div class="row flex-md-row flex-column-reverse">
+        <Loader v-show="!loaded"></Loader>
         <div class="col-md-9">
             <div class="row">
                 <form class="col d-flex" role="search">
@@ -43,7 +44,16 @@
                         v-for="target in targets"
                         :key="target.id"
                     >
-                        <th scope="row">{{ target.title }}</th>
+                        <th scope="row">
+                            <!-- {{ target.title }} -->
+                            <router-link
+                            :to="'target/' + target.id"
+                            class="text-black text-decoration-none"
+                            exact
+                            >
+                                {{ target.title }}
+                            </router-link>
+                        </th>
                         <td class="text-center">{{ target.cost }}</td>
                         <td class="text-center d-none d-md-block">{{ target.gain }}</td>
                         <td class="text-center">{{ target.priority }}</td>
@@ -118,10 +128,13 @@
 
 <script>
 import Cookie from "js-cookie";
+import Loader from "../components/Loader.vue";
 
 export default {
     data() {
         return {
+            loaded: false,
+
             targets: [],
             categories: [],
 
@@ -140,8 +153,13 @@ export default {
         this.fetchCategories();
     },
 
+    mounted() {
+        this.loaded = true;
+    },
+
     methods: {
         fetchTargets() {
+            this.loaded = false;
             let params = "";
             this.selected_subcategory = '';
 
@@ -155,6 +173,7 @@ export default {
             })
                 .then((response) => response.json())
                 .then((data) => {
+                    this.loaded = true;
                     if (!data.error) {
                         this.targets = data;
                         this.targets.sort(
@@ -167,6 +186,7 @@ export default {
         },
 
         reloadTargets(categotyid) {
+            this.loaded = false;
             this.selected_subcategory = categotyid;
 
             fetch(`http://localhost:8000/api/category/${categotyid}/targets`, {
@@ -179,6 +199,7 @@ export default {
             })
                 .then((response) => response.json())
                 .then((data) => {
+                    this.loaded = true;
                     if (!data.error) {
                         this.targets = data;
                         this.targets.sort(
@@ -191,6 +212,7 @@ export default {
         },
 
         fetchCategories() {
+            this.loaded = false;
             fetch("http://localhost:8000/api/category/categories", {
                 method: "GET",
                 headers: {
@@ -201,6 +223,7 @@ export default {
             })
                 .then((response) => response.json())
                 .then((data) => {
+                    this.loaded = true;
                     if (!data.error) {
                         this.categories = data;
                     } else {
@@ -218,6 +241,8 @@ export default {
             );
         }
     },
+
+    components: {Loader}
 };
 
 function compareValues(key, order) {

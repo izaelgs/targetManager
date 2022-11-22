@@ -1,5 +1,6 @@
 <template>
     <div class="h-100 d-flex justify-content-center align-items-center">
+        <Loader v-show="!loaded"></Loader>
         <form @submit.stop.prevent="submit" class="form-signin">
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
@@ -22,10 +23,14 @@
 
 import Cookie from 'js-cookie';
 import AppendToast from '../mixins/appendToast.vue';
+import Loader from '../components/Loader.vue';
 
 export default {
     data() {
         return {
+
+            loaded: false,
+
             email: '',
             password: '',
         }
@@ -35,9 +40,13 @@ export default {
         Cookie.remove('access_token')
     },
 
+    mounted() {
+        this.loaded = true;
+    },
+
     methods: {
         submit() {
-
+            this.loaded = false;
             const payload = {
                 email: this.email,
                 password: this.password,
@@ -53,6 +62,7 @@ export default {
             })
             .then(response => response.json())
             .then (data => {
+                this.loaded = true;
                 if(!data.error) {
                     Cookie.set('access_token', data.access_token);
                     this.$router.push('/');
@@ -62,6 +72,8 @@ export default {
             })
         },
     },
+
+    components: {Loader},
 
     mixins: [AppendToast]
 }

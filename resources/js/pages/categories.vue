@@ -1,5 +1,6 @@
 <template>
     <div class="">
+        <Loader v-show="!loaded"></Loader>
         <div class="row">
             <div class="col-md-12 mb-2 mb-md-3">
                 <form @submit.stop.prevent="submit" class="card">
@@ -32,7 +33,7 @@
                             class="form-control my-2"
                         ></textarea>
                         <div class="d-grid gap-2">
-                            <button class="btn btn-primary" type="submit">
+                            <button class="btn btn-outline-primary" type="submit">
                                 Adicionar
                             </button>
                         </div>
@@ -111,10 +112,13 @@
 <script>
 import Cookie from "js-cookie";
 import AppendToast from "../mixins/appendToast.vue";
+import Loader from "../components/Loader.vue";
 
 export default {
     data() {
         return {
+            loaded: false,
+
             categories: [],
 
             title: "",
@@ -197,6 +201,7 @@ export default {
         },
 
         submit() {
+            this.loaded = false;
             const payload = {
                 title: this.title,
                 description: this.description,
@@ -214,18 +219,18 @@ export default {
             })
                 .then((response) => response.json())
                 .then((data) => {
+                    this.loaded = true;
                     if (!data.errors) {
                         this.showToast(data.message,"success");
                         this.fetchData();
                     } else {
-                        Object.entries(data.errors).forEach(error => {
-                            this.showToast(error, "danger", 'exclamation-triangle-fill');
-                        });
+                        this.displayErrors(data.errors);
                     }
                 });
         },
 
         fetchData() {
+            this.loaded = false;
             fetch("http://localhost:8000/api/category/", {
                 method: "GET",
                 headers: {
@@ -236,6 +241,7 @@ export default {
             })
                 .then((response) => response.json())
                 .then((data) => {
+                    this.loaded = true;
                     this.title = this.description = this.categoryid = "";
 
                     if (!data.error) {
@@ -249,6 +255,8 @@ export default {
                 });
         },
     },
+
+    components: {Loader},
 
     mixins: [AppendToast],
 };

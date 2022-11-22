@@ -46,7 +46,7 @@ main {
     main .sidebar {
         position: fixed;
         height: 90vh;
-        z-index: 10;
+        z-index: 11;
         width: 250px;
         left: -255px;
         transition: 0.8s;
@@ -65,31 +65,31 @@ main {
     }
 }
 
-@media only screen and (min-width: 600px) {
-    .form-signin {
-        width: 60%;
+    @media only screen and (min-width: 600px) {
+        .form-signin {
+            width: 60%;
+        }
     }
-}
 
-@media only screen and (min-width: 768px) {
-    .form-signin {
-        width: 40%;
+    @media only screen and (min-width: 768px) {
+        .form-signin {
+            width: 40%;
+        }
     }
-}
 
-@media only screen and (min-width: 992px) {
-    .form-signin {
-        width: 20%;
-    }
+    @media only screen and (min-width: 992px) {
+        .form-signin {
+            width: 20%;
+        }
 }
 
 nav {
     grid-area: sidebar;
 }
 
-nav.bg-primary li a {
-    color: white !important;
-}
+    nav.bg-primary li a {
+        color: white !important;
+    }
 
 content {
     grid-area: content;
@@ -102,7 +102,8 @@ content {
     background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity));
 }
 
-tr, tbody {
+tr,
+tbody {
     transition: 0.8s;
 }
 
@@ -113,3 +114,65 @@ footer {
 .pointer {
     cursor: pointer;
 }
+
+.lds-ellipsis {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+    .lds-ellipsis div {
+        position: absolute;
+        top: 33px;
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity));;
+        animation-timing-function: cubic-bezier(0, 1, 1, 0);
+    }
+    .lds-ellipsis div:nth-child(1) {
+        left: 8px;
+        animation: lds-ellipsis1 0.6s infinite;
+    }
+    .lds-ellipsis div:nth-child(2) {
+        left: 8px;
+        animation: lds-ellipsis2 0.6s infinite;
+    }
+    .lds-ellipsis div:nth-child(3) {
+        left: 32px;
+        animation: lds-ellipsis2 0.6s infinite;
+    }
+    .lds-ellipsis div:nth-child(4) {
+        left: 56px;
+        animation: lds-ellipsis3 0.6s infinite;
+    }
+    .loader {
+        background: rgba(var(--bs-secondary-rgb), 0.4);
+        display: flex;
+        position: fixed;
+        z-index: 12;
+    }
+@keyframes lds-ellipsis1 {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+    @keyframes lds-ellipsis3 {
+        0% {
+            transform: scale(1);
+        }
+        100% {
+            transform: scale(0);
+        }
+    }
+    @keyframes lds-ellipsis2 {
+        0% {
+            transform: translate(0, 0);
+        }
+        100% {
+            transform: translate(24px, 0);
+        }
+    }

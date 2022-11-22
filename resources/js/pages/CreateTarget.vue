@@ -1,5 +1,6 @@
 <template>
     <div>
+        <Loader v-show="!loaded"></Loader>
         <section class="rounded">
             <h2>Adicionar Objetivo</h2>
             <p>
@@ -138,7 +139,7 @@
                     />
                 </div>
                 <div class="col-12 d-grid gap-2">
-                    <button type="submit" class="btn btn-secondary">
+                    <button type="submit" class="btn btn-outline-primary">
                         Cadastrar
                     </button>
                 </div>
@@ -150,10 +151,13 @@
 <script>
 import Cookie from "js-cookie";
 import AppendToast from "../mixins/appendToast.vue";
+import Loader from "../components/Loader.vue";
 
 export default {
     data() {
         return {
+            loaded: false,
+
             categories: [],
             subcategories: [],
 
@@ -187,6 +191,7 @@ export default {
         })
             .then((response) => response.json())
             .then((data) => {
+                this.loaded = true;
                 if (!data.error) {
                     this.categories = data;
                 } else {
@@ -197,7 +202,7 @@ export default {
 
     methods: {
         submit() {
-
+            this.loaded = false;
             this.selected_categories = this.selected_categories.concat(this.selected_subcategories);
 
             const payload = encodeUrl({
@@ -223,16 +228,14 @@ export default {
             })
                 .then((response) => response.json())
                 .then((data) => {
-
+                    this.loaded = true;
 
                     if (!data.errors) {
                         this.selected_categories = this.selected_subcategories = [];
                         this.title = this.deadline = this.description = this.cost = this.gain = this.priority = "";
                         this.showToast(data.message, "success");
                     } else {
-                        Object.entries(data.errors).forEach(error => {
-                            this.showToast(error[1], "danger", 'exclamation-triangle-fill');
-                        });
+                        this.displayErrors(data.errors);
                     }
                 });
         },
@@ -269,6 +272,8 @@ export default {
             ).disabled = null;
         },
     },
+
+    components: {Loader},
 
     mixins: [AppendToast]
 };

@@ -12,7 +12,13 @@ export default{methods: {
 
     getEmoji(emojis) {
         let indice = Math.floor(Math.random() * emojis.length);
-        return `${emojis[indice]}-fill`;
+        return emojis[indice];
+    },
+
+    displayErrors(errors) {
+        Object.entries(errors).forEach(error => {
+            this.showToast(error[1], "danger", 'exclamation-triangle-fill');
+        });
     },
 
     appendToast(mensagem, status, icon) {
