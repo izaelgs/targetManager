@@ -23,15 +23,15 @@ export default {
     },
     methods: {
 
-        del(url, callback, hideSuccessMessage) {
+        del(url, callback, errorHandler, hideSuccessMessage) {
             axios.delete(url)
             .then(data => {
-                if(data.status == 200) {
-                    callback(data.data);
-                    if(!hideSuccessMessage) this.showToast(data.data.message, "success");
-                } else {
-                    this.showErrors(data.data);
-                }
+                callback(data.data);
+                if(!hideSuccessMessage) this.showToast(data.data.message, "success");
+            })
+            .catch(error => {
+                if(errorHandler) errorHandler(error.response.data)
+                if(!hideSuccessMessage) this.showErrors(error.response.data)
             })
         },
 
@@ -43,7 +43,7 @@ export default {
                 })
                 .catch(error => {
                     if(errorHandler) errorHandler(error.response.data)
-                    this.showErrors(error.response.data)
+                    if(!hideSuccessMessage) this.showErrors(error.response.data)
                 })
         },
 

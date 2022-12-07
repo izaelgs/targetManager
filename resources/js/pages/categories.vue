@@ -2,6 +2,7 @@
     <div class="">
         <Loader v-show="!loaded"></Loader>
         <div class="row">
+            <!-- Formulário de Adição -->
             <div class="col-md-12 mb-2 mb-md-3">
                 <form @submit.stop.prevent="submit" class="card">
                     <div class="card-body">
@@ -40,6 +41,8 @@
                     </div>
                 </form>
             </div>
+
+            <!-- Listagem de exibição e edição -->
             <div v-if="editableCategories" v-for="category in editableCategories" class="col-md-4 mb-2 mb-md-3">
                 <form
                     @submit.stop.prevent="submitEdit(category)"
@@ -58,9 +61,14 @@
                             type="text" name="title"
                             class="form-control mt-3 ms-3"
                         >
-                        <button @click.prevent="edit(category)" class="btn">
-                            <i :class="['bi', category.edit ? 'bi-x-lg' : 'bi-pencil']"></i>
-                        </button>
+                        <div class="m-2">
+                            <button @click.prevent="edit(category)" :class="['btn p-2 m-0', {'btn-secondary text-light': !category.is_father}]">
+                                <i :class="['bi', category.edit ? 'bi-x-lg' : 'bi-pencil']"></i>
+                            </button>
+                            <button v-show="!category.edit" @click.prevent="remove(category)" :class="['btn p-2 m-0', {'btn-secondary text-light': !category.is_father}]">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="card-body">
                         <span v-show="!category.edit" v-if="category.category" class="badge bg-primary">
@@ -113,6 +121,7 @@
 import Cookie from "js-cookie";
 import AppendToast from "../mixins/appendToast.vue";
 import Loader from "../components/Loader.vue";
+import Api from "../mixins/Api.vue";
 
 export default {
     data() {
@@ -146,18 +155,18 @@ export default {
     },
 
     mounted() {
-        const toastTrigger = document.getElementById("liveToastBtn");
-        const toastLiveExample = document.getElementById("teste");
-        if (toastTrigger) {
-            toastTrigger.addEventListener("click", () => {
-                const toast = new bootstrap.Toast(toastLiveExample);
 
-                toast.show();
-            });
-        }
     },
 
     methods: {
+
+        remove(category) {
+            this.del('category/' + category.id, data => {
+                this.fetchData()
+            }, error => {
+                this.loaded = true;
+            })
+        },
 
         edit(category) {
             category.edit = !category.edit;
@@ -171,33 +180,11 @@ export default {
                 categoryid: category.categoryid,
             };
 
-            fetch("http://127.0.0.1:8000/api/category/" + category.id, {
-                method: "PUT",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + this.access_token,
-                },
-                body: JSON.stringify(payload),
+            this.put('category'+ category.id, payload, data => {
+                this.fetchData();
+            }, error => {
+                this.loaded = true;
             })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (!data.error) {
-                        this.appendToast(data.message,"success")
-                        .then((element) => {
-                            const toast = new bootstrap.Toast(element);
-                            toast.show();
-                        });
-
-                        this.fetchData();
-                    } else {
-                        this.appendToast(data.error,"danger")
-                        .then((element) => {
-                            const toast = new bootstrap.Toast(element);
-                            toast.show();
-                        });
-                    }
-                });
         },
 
         submit() {
@@ -208,56 +195,30 @@ export default {
                 categoryid: this.categoryid,
             };
 
-            fetch("http://127.0.0.1:8000/api/category", {
-                method: "POST",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + this.access_token,
-                },
-                body: JSON.stringify(payload),
+            this.post('category', payload, data => {
+                this.fetchData();
+            }, error => {
+                this.loaded = true
             })
-                .then((response) => response.json())
-                .then((data) => {
-                    this.loaded = true;
-                    if (!data.errors) {
-                        this.showToast(data.message,"success");
-                        this.fetchData();
-                    } else {
-                        this.displayErrors(data.errors);
-                    }
-                });
         },
 
         fetchData() {
             this.loaded = false;
-            fetch("http://localhost:8000/api/category/", {
-                method: "GET",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + this.access_token,
-                },
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    this.loaded = true;
-                    this.title = this.description = this.categoryid = "";
 
-                    if (!data.error) {
-                        this.categories = data.map(category => {
-                            category.edit = false;
-                            return category;
-                        });
-                    } else {
-                        this.showToast(data.error ?? 'Erro desconhecido', 'danger', 'exclamation-octagon-fill');
-                    }
+            this.get('category', (data) => {
+                this.loaded = true;
+                this.title = this.description = this.categoryid = "";
+
+                this.categories = data.map(category => {
+                    category.edit = false;
+                    return category;
                 });
+            }, /*errorHandler*/ null, /*hideSuccessMessage*/ true)
         },
     },
 
     components: {Loader},
 
-    mixins: [AppendToast],
+    mixins: [AppendToast, Api],
 };
 </script>
