@@ -42,7 +42,8 @@ export default {
                     callback(data.data)
                 })
                 .catch(error => {
-                    errorHandler(error.response.data)
+                    if(errorHandler) errorHandler(error.response.data)
+                    this.showErrors(error.response.data)
                 })
         },
 

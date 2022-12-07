@@ -152,6 +152,7 @@
 import Cookie from "js-cookie";
 import AppendToast from "../mixins/appendToast.vue";
 import Loader from "../components/Loader.vue";
+import Api from "../mixins/Api.vue";
 
 export default {
     data() {
@@ -180,24 +181,8 @@ export default {
 
     created() {
         this.access_token = Cookie.get("access_token");
+        this.fetchCategories();
 
-        fetch("http://localhost:8000/api/category/categories", {
-            method: "GET",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + this.access_token,
-            },
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                this.loaded = true;
-                if (!data.error) {
-                    this.categories = data;
-                } else {
-                    alert(data.error);
-                }
-            });
     },
 
     methods: {
@@ -205,7 +190,7 @@ export default {
             this.loaded = false;
             this.selected_categories = this.selected_categories.concat(this.selected_subcategories);
 
-            const payload = encodeUrl({
+            const payload = {
                 title: this.title,
                 deadline: this.deadline,
                 description: this.description,
@@ -215,29 +200,40 @@ export default {
                 "categories[]": this.selected_categories.map((category) => {
                     return category.id;
                 }),
-            });
+            };
 
-            fetch("http://127.0.0.1:8000/api/target", {
-                method: "POST",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/x-www-form-urlencoded",
-                    Authorization: "Bearer " + this.access_token,
-                },
-                body: payload,
+            this.post('target', payload, (data) => {
+                this.loaded = true;
+
+                this.selected_categories = this.selected_subcategories = [];
+                this.title = this.deadline = this.description = this.cost = this.gain = this.priority = "";
+                this.showToast(data.message, "success");
+
+            }, error => {
+                this.loaded = true;
             })
-                .then((response) => response.json())
-                .then((data) => {
-                    this.loaded = true;
 
-                    if (!data.errors) {
-                        this.selected_categories = this.selected_subcategories = [];
-                        this.title = this.deadline = this.description = this.cost = this.gain = this.priority = "";
-                        this.showToast(data.message, "success");
-                    } else {
-                        this.displayErrors(data.errors);
-                    }
-                });
+            // fetch("http://127.0.0.1:8000/api/target", {
+            //     method: "POST",
+            //     headers: {
+            //         Accept: "application/json",
+            //         "Content-Type": "application/x-www-form-urlencoded",
+            //         Authorization: "Bearer " + this.access_token,
+            //     },
+            //     body: payload,
+            // })
+            //     .then((response) => response.json())
+            //     .then((data) => {
+            //         this.loaded = true;
+
+            //         if (!data.errors) {
+            //             this.selected_categories = this.selected_subcategories = [];
+            //             this.title = this.deadline = this.description = this.cost = this.gain = this.priority = "";
+            //             this.showToast(data.message, "success");
+            //         } else {
+            //             this.displayErrors(data.errors);
+            //         }
+            //     });
         },
 
         addCategory(categories , selected_categories, selected_category) {
@@ -271,11 +267,22 @@ export default {
                 (c) => c.id == category.id
             ).disabled = null;
         },
+
+        fetchCategories() {
+            this.get('category/categories', (data) => {
+                this.loaded = true;
+                if (!data.error) {
+                    this.categories = data;
+                } else {
+                    alert(data.error);
+                }
+            }, null, true)
+        }
     },
 
     components: {Loader},
 
-    mixins: [AppendToast]
+    mixins: [AppendToast, Api]
 };
 
 function encodeUrl(payload) {
