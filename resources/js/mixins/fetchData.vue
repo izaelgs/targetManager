@@ -1,6 +1,8 @@
 <script>
 import Cookie from "js-cookie";
 import AppendToast from "./appendToast.vue";
+import axios from 'axios';
+
 export default {
     data() {
         return{
@@ -9,65 +11,77 @@ export default {
     },
     created() {
         this.access_token = Cookie.get("access_token");
-        this.fetchData();
+        this.language = Cookie.get("language");
+
+        axios.defaults.baseURL = `/api/`;
+        axios.defaults.headers = {
+            "Authorization" : "Bearer " + this.access_token,
+            "Accept" : "application/json",
+            "Accept-Language" : this.language
+        };
     },
     methods: {
 
-        post(url,payload, callback) {
-
-            fetch("http://127.0.0.1:8000/api/" + url, {
-                method: "POST",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + this.access_token,
-                },
-                body: JSON.stringify(payload),
+        del(url, callback, hideSuccessMessage) {
+            axios.delete(url)
+            .then(data => {
+                if(data.status == 200) {
+                    callback(data.data);
+                    if(!hideSuccessMessage) this.showToast(data.data.message, "success");
+                } else {
+                    this.showErrors(data.data);
+                }
             })
-                .then(res => {
-                    if (res.ok) {
-                    return res.json();
-                    } else {
-                    return Promise.reject(res);
-                    }
-                })
-                .then((data) => {
-                    callback(data);
-                })
-                .catch((error) => {
-                    // if(error.errors) {
-                    //     this.displayErrors(data.errors);
-                    // }
+        },
 
-                    // if(error.message) {
-                    //     this.showToast(error.message, "danger", 'exclamation-triangle-fill');
-                    // }
+        post(url,payload, callback, errorHandler, hideSuccessMessage) {
+            axios.post(url, payload)
+                .then(data => {
+                    if(!hideSuccessMessage) this.showToast(data.data.message, "success");
+                    callback(data.data)
+                })
+                .catch(error => {
+                    errorHandler(error.response.data)
+                })
+        },
+
+        put(url,payload, callback, errorHandler) {
+            axios.put(url, payload)
+                .then(data => {
+                    this.showToast(data.data.message, "success");
+                    callback(data.data)
+                })
+                .catch(error => {
                     console.log(error);
-                });
-        },
-
-        fetchData(url, callback) {
-            fetch("http://localhost:8000/api/"+ url, {
-                method: "GET",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + this.access_token,
-                },
-            })
-                .then(response => this._handleErrors(response))
-                .then((response) => response.json())
-                .then((data) => {
-                    callback(data);
+                    errorHandler ? errorHandler(error.response.data) : this.showErrors(error.response.data);
                 })
-                .catch((erro) => {
-                    console.log(erro);
-                });
         },
 
-        _handleErrors(res) {
-            if(!res.ok) throw new Error(res.statusText);
-            return res;
+        fetchData(url, callback, errorHandler, hideSuccessMessage) {
+            axios.get(url)
+            .then(data => {
+                if(data.status == 200) {
+                    callback(data.data);
+                    if(!hideSuccessMessage) this.showToast(data.data.message, "success");
+                } else {
+                    errorHandler ? errorHandler(error.response.data) : this.showErrors(error.response.data);
+                }
+            })
+        },
+
+
+        showErrors(data) {
+            if(data.message) {
+                this.showToast(data.message, "danger", 'exclamation-triangle-fill');
+            }
+            if(data.errors) {
+                this.displayErrors(data.errors);
+            }
+        },
+
+        changeLanguage(language) {
+            Cookie.set('language', language);
+            window.location.reload()
         }
     },
 
