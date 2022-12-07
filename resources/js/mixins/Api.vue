@@ -26,12 +26,13 @@ export default {
         del(url, callback, errorHandler, hideSuccessMessage) {
             axios.delete(url)
             .then(data => {
-                callback(data.data);
                 if(!hideSuccessMessage) this.showToast(data.data.message, "success");
+                callback(data.data);
             })
             .catch(error => {
-                if(errorHandler) errorHandler(error.response.data)
+                console.log(error);
                 if(!hideSuccessMessage) this.showErrors(error.response.data)
+                if(errorHandler) errorHandler(error.response.data)
             })
         },
 
@@ -42,8 +43,21 @@ export default {
                     callback(data.data)
                 })
                 .catch(error => {
-                    if(errorHandler) errorHandler(error.response.data)
+                    console.log(error);
                     if(!hideSuccessMessage) this.showErrors(error.response.data)
+                    if(errorHandler) errorHandler(error.response.data)
+                })
+        },
+
+        patch(url,payload, callback, errorHandler, hideSuccessMessage) {
+            axios.patch(url, payload)
+                .then(data => {
+                    if(!hideSuccessMessage) this.showToast(data.data.message, "success");
+                    callback(data.data)
+                })
+                .catch(error => {
+                    console.log(error);
+                    errorHandler ? errorHandler(error.response.data) : this.showErrors(error.response.data);
                 })
         },
 

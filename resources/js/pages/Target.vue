@@ -7,7 +7,7 @@
             </button>
             <button class="btn px-2 text-danger"><i class="bi bi-trash"></i></button>
         </div>
-        <form v-show="edit" class="row g-3">
+        <!-- <form v-show="edit" class="row g-3">
                 <div class="col-12">
                     <input
                         type="name"
@@ -138,7 +138,7 @@
                         Salvar Alterações
                     </button>
                 </div>
-        </form>
+        </form> -->
         <div v-show="!edit">
             <h2>{{ target.title }}</h2>
             <div>
@@ -412,55 +412,37 @@ export default {
                 status: stage.status ? 1 : 0,
             };
 
-            fetch("http://127.0.0.1:8000/api/stage/" + stage.id, {
-                method: "PATCH",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + this.access_token,
-                },
-                body: JSON.stringify(payload),
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (!data.error) {
-                        let emojis = stage.status
-                            ? [
-                                  "arrow-through-heart-fill",
-                                  "calendar-check-fill",
-                                  "check-circle-fill",
-                                  "clipboard-heart-fill",
-                                  "emoji-kiss-fill",
-                                  "emoji-smile-fill",
-                                  "emoji-wink-fill",
-                                  "hand-thumbs-up-fill",
-                                  "heart-fill",
-                                  "hearts",
-                                  "stars",
-                                  "emoji-heart-eyes-fill",
-                                  "emoji-laughing-fill",
-                                  "emoji-sunglasses-fill",
-                              ]
-                            : [
-                                  "emoji-dizzy-fill",
-                                  "emoji-expressionless-fill",
-                                  "emoji-frown-fill",
-                                  "heartbreak-fill",
-                              ];
+            this.patch("stage/" + stage.id, payload, data => {
+                let emojis = stage.status
+                    ? [
+                            "arrow-through-heart-fill",
+                            "calendar-check-fill",
+                            "check-circle-fill",
+                            "clipboard-heart-fill",
+                            "emoji-kiss-fill",
+                            "emoji-smile-fill",
+                            "emoji-wink-fill",
+                            "hand-thumbs-up-fill",
+                            "heart-fill",
+                            "hearts",
+                            "stars",
+                            "emoji-heart-eyes-fill",
+                            "emoji-laughing-fill",
+                            "emoji-sunglasses-fill",
+                        ]
+                    : [
+                            "emoji-dizzy-fill",
+                            "emoji-expressionless-fill",
+                            "emoji-frown-fill",
+                            "heartbreak-fill",
+                        ];
 
-                        this.showToast(
-                            data.message,
-                            "success",
-                            `${this.getEmoji(emojis)} text-body fs-5`
-                        );
-                    } else {
-                        this.showToast(
-                            data.error,
-                            "danger",
-                            "exclamation-octagon-fill"
-                        );
-                    }
-                });
+                this.showToast(
+                    data.message,
+                    "success",
+                    `${this.getEmoji(emojis)} text-body fs-5`
+                );
+            }, null, true);
         },
 
         submit() {
@@ -480,9 +462,10 @@ export default {
                     "emoji-sunglasses-fill",
                     "check2-circle-fill",
                 ];
-                this.showToast(data.message, "success",`${this.getEmoji(emojis)} text-body fs-5`);
                 this.title = this.description = this.tolerance = this.deadline = this.complexity = '';
                 this.getTarget();
+            }, error => {
+                this.loaded = true;
             })
 
         },
@@ -499,62 +482,36 @@ export default {
                 stageid: stage.stageid,
             };
 
-            fetch("http://127.0.0.1:8000/api/stage/" + stage.id, {
-                method: "PUT",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + this.access_token,
-                },
-                body: JSON.stringify(payload),
+            this.put("stage/" + stage.id, payload, data => {
+                this.getTarget();
+            }, error => {
+                this.loaded = true;
             })
-                .then((response) => response.json())
-                .then((data) => {
-                    this.loaded = true;
-                    if (!data.errors) {
-                        this.showToast(data.message, "success");
-                        this.getTarget();
-                    } else {
-                        this.displayErrors(data.errors);
-                    }
-                });
         },
 
         delete_stage(stage) {
-            fetch("http://localhost:8000/api/stage/" + stage.id, {
-                method: "DELETE",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + this.access_token,
-                },
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (!data.error) {
-                        const index = this.target.stages.indexOf(stage);
-                        if (index > -1) {
-                            // only splice array when item is found
-                            this.target.stages.splice(index, 1); // 2nd parameter means remove one item only
-                        }
 
-                        this.showToast(data.message, "success");
-                    } else {
-                        this.showToast(data.error, "danger");
-                    }
-                });
+            this.del("stage/" + stage.id, data => {
+                const index = this.target.stages.indexOf(stage);
+                if (index > -1) {
+                    // only splice array when item is found
+                    this.target.stages.splice(index, 1); // 2nd parameter means remove one item only
+                }
+            });
         },
 
         getTarget() {
             this.loaded = false;
-            this.fetchData("target/" + this.$route.params.id, data => {
+            this.get("target/" + this.$route.params.id, data => {
                 data.stages = data.stages.map((stage) => {
                     stage.edit = false;
                     return stage;
                 });
                 this.loaded = true;
                 this.target = data;
-            });
+            }, error => {
+                this.loaded = true;
+            }, true);
         }
     },
 
