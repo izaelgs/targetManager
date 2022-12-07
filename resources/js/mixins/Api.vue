@@ -7,11 +7,12 @@ export default {
     data() {
         return{
             access_token: "",
+            language: ''
         }
     },
     created() {
         this.access_token = Cookie.get("access_token");
-        this.language = Cookie.get("language");
+        this.language = Cookie.get("language") ?? navigator.language;
 
         axios.defaults.baseURL = `/api/`;
         axios.defaults.headers = {
@@ -57,7 +58,7 @@ export default {
                 })
         },
 
-        fetchData(url, callback, errorHandler, hideSuccessMessage) {
+        get(url, callback, errorHandler, hideSuccessMessage) {
             axios.get(url)
             .then(data => {
                 if(data.status == 200) {

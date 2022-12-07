@@ -360,7 +360,7 @@
 <script>
 import Cookie from "js-cookie";
 import appendToast from "../mixins/appendToast.vue";
-import FetchData from "../mixins/fetchData.vue";
+import Api from "../mixins/Api.vue";
 import Loader from "../components/Loader.vue";
 
 export default {
@@ -560,6 +560,6 @@ export default {
 
     components: {Loader},
 
-    mixins: [appendToast, FetchData],
+    mixins: [appendToast, Api],
 };
 </script>

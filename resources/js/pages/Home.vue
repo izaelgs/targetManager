@@ -129,6 +129,7 @@
 <script>
 import Cookie from "js-cookie";
 import Loader from "../components/Loader.vue";
+import Api from "../mixins/Api.vue";
 
 export default {
     data() {
@@ -163,73 +164,40 @@ export default {
             let params = "";
             this.selected_subcategory = '';
 
-            fetch(`http://localhost:8000/api/target/${params}`, {
-                method: "GET",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + this.access_token,
-                },
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    this.loaded = true;
-                    if (!data.error) {
-                        this.targets = data;
-                        this.targets.sort(
-                            compareValues(this.field, this.order)
-                        );
-                    } else {
-                        alert(data.error);
-                    }
-                });
+            this.get(`target/${params}`, (data) => {
+                this.loaded = true;
+                if (!data.error) {
+                    this.targets = data;
+                    this.targets.sort(
+                        compareValues(this.field, this.order)
+                    );
+                } else {
+                    alert(data.error);
+                }
+            }, null, true)
         },
 
         reloadTargets(categotyid) {
             this.loaded = false;
             this.selected_subcategory = categotyid;
 
-            fetch(`http://localhost:8000/api/category/${categotyid}/targets`, {
-                method: "GET",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + this.access_token,
-                },
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    this.loaded = true;
-                    if (!data.error) {
-                        this.targets = data;
-                        this.targets.sort(
-                            compareValues(this.field, this.order)
-                        );
-                    } else {
-                        alert(data.error);
-                    }
-                });
+            this.get(`category/${categotyid}/targets`,(data) => {
+                this.loaded = true;
+
+                this.targets = data;
+                this.targets.sort(
+                    compareValues(this.field, this.order)
+                );
+            }, null, true)
         },
 
         fetchCategories() {
             this.loaded = false;
-            fetch("http://localhost:8000/api/category/categories", {
-                method: "GET",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + this.access_token,
-                },
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    this.loaded = true;
-                    if (!data.error) {
-                        this.categories = data;
-                    } else {
-                        alert(data.error);
-                    }
-                });
+            this.get('category/categories', data => {
+                this.categories = data;
+                this.loaded = true;
+            }, null, true)
+
         },
 
         changeField(field) {
@@ -242,7 +210,9 @@ export default {
         }
     },
 
-    components: {Loader}
+    components: {Loader},
+
+    mixins: [Api]
 };
 
 function compareValues(key, order) {
