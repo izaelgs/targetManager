@@ -8,7 +8,7 @@ export default {
             next('/login')
         }
 
-        fetch('http://127.0.0.1:8000/api/me', {
+        fetch('/api/me', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

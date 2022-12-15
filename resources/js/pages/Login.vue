@@ -24,6 +24,7 @@
 import Cookie from 'js-cookie';
 import AppendToast from '../mixins/appendToast.vue';
 import Loader from '../components/Loader.vue';
+import Api from '../mixins/Api.vue';
 
 export default {
     data() {
@@ -52,16 +53,7 @@ export default {
                 password: this.password,
             }
 
-            fetch('http://127.0.0.1:8000/api/login', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            })
-            .then(response => response.json())
-            .then (data => {
+            this.post('login', payload, data => {
                 this.loaded = true;
                 if(!data.error) {
                     Cookie.set('access_token', data.access_token);
@@ -69,13 +61,15 @@ export default {
                 } else {
                     this.showToast(data.error == 'Unauthorized' ? 'E-mail ou Senha incorretos' : 'Erro desconhecido', 'danger');
                 }
-            })
+            }, err => {
+                this.loaded = true;
+            }, true)
         },
     },
 
     components: {Loader},
 
-    mixins: [AppendToast]
+    mixins: [AppendToast, Api]
 }
 
 </script>

@@ -77,6 +77,7 @@
 
 <script>
 import Cookie from "js-cookie";
+import Api from "../mixins/Api.vue";
 
 export default {
     data() {
@@ -94,27 +95,20 @@ export default {
         appendTargets() {
             const token = Cookie.get("access_token");
 
-            fetch("http://localhost:8000/api/target/", {
-                method: "GET",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + token,
-                },
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (!data.error) {
-                        this.targets = data;
-                    } else {
-                        alert(data.error);
-                    }
-                });
+            this.get('target', data => {
+                if (!data.error) {
+                    this.targets = data;
+                } else {
+                    alert(data.error);
+                }
+            }, null, true)
         },
 
         toggle() {
             this.active = !this.active;
         }
     },
+
+    mixins: [Api],
 };
 </script>
