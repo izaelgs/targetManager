@@ -36,7 +36,7 @@ export default {
             })
         },
 
-        post(url,payload, callback, errorHandler, hideSuccessMessage) {
+        post(url,payload, callback, errorHandler, hideSuccessMessage, hideErrorMessage) {
             axios.post(url, payload)
                 .then(data => {
                     if(!hideSuccessMessage) this.showToast(data.data.message, "success");
@@ -44,7 +44,7 @@ export default {
                 })
                 .catch(error => {
                     console.log(error);
-                    if(!hideSuccessMessage) this.showErrors(error.response.data)
+                    if(!hideErrorMessage) this.showErrors(error.response.data)
                     if(errorHandler) errorHandler(error.response.data)
                 })
         },
