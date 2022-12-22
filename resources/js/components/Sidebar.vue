@@ -13,7 +13,7 @@
         ></i>
         <router-link
             :to="{ name: 'home' }"
-            class="nav-link fw-bolder fs-2 text-info"
+            class="nav-link text-header p-2"
             exact
             >TargetManager
         </router-link>

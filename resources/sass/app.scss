@@ -1,5 +1,6 @@
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Nunito");
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Puddles&display=swap');
 
 // Variables
 @import "variables";
@@ -14,6 +15,16 @@ body {
 
 #app {
     height: 100%;
+}
+
+.text-header {
+    font-family: 'Rubik Puddles', cursive;
+    font-size: calc(1.2825rem + 0.39vw) !important;
+    color: var(--bs-light);
+}
+
+.text-header:hover {
+    color: rgba(var(--bs-light-rgb), 0.5);
 }
 
 main {

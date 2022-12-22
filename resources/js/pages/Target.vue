@@ -1,7 +1,7 @@
 <template>
     <div class="text-center">
         <Loader v-show="!loaded"></Loader>
-        <div class="p-1 position-absolute top-0 end-0 mx-4 bg-light" style="z-index: 10;">
+        <div class="p-1 rounded position-absolute top-0 end-0 mx-4 bg-light opacity-75" style="z-index: 10;">
             <button @click="editFields()" class="btn px-2">
                 <i :class="['bi', edit ? 'bi-x-lg' :  'bi-pencil']"></i>
             </button>
