@@ -1,13 +1,14 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Não há nada por aqui</div>
-
-                    <div class="card-body">
-                        Não achei esse trem que ce ta procurando
+    <div class="position-relative h-100">
+        <div class="position-absolute top-50 start-50 translate-middle">
+            <div>
+                <div>
+                    <div class="list-group-item card d-flex flex-row align-items-center justify-content-center">
+                        <h1 class="fw-bolder text-primary">404</h1>
+                        <div class="vr mx-2"></div>
+                        <h1 class="fw-bold">Page not found</h1>
                     </div>
+                    <p class="mt-6 text-center">Please check the URL in the address bar and try again.</p>
                 </div>
             </div>
         </div>
@@ -15,9 +16,9 @@
 </template>
 
 <script>
-    export default {
-        mounted() {
-            console.log('Component mounted.')
-        }
-    }
+
+export default {
+
+}
+
 </script>
