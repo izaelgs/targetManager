@@ -6,12 +6,12 @@
 
             <div class="form-floating mt-2">
                 <input v-model="email" type="email" class="form-control" id="floatingInput"
-                    placeholder="name@example.com">
+                    placeholder="name@example.com" required>
                 <label for="floatingInput">Email</label>
             </div>
             <div class="form-floating mt-2">
                 <input v-model="password" type="password" class="form-control" id="floatingPassword"
-                    placeholder="Password">
+                    placeholder="Password" required>
                 <label for="floatingPassword">Senha</label>
             </div>
             <button class="w-100 btn btn-lg btn-primary mt-2" type="submit">Entrar</button>

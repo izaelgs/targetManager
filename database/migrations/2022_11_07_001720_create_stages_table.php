@@ -16,13 +16,15 @@ class CreateStagesTable extends Migration
         Schema::create('stages', function (Blueprint $table) {
             $table->id();
             $table->foreignId('target_id')
-                ->constrained();
+                ->constrained()
+                ->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger("stageid", false, true)
                 ->nullable();
             $table->index("stageid");
             $table->foreign("stageid")
                 ->references('id')
-                ->on('stages');
+                ->on('stages')
+                ->onDelete('cascade')->onUpdate('cascade');
             $table->string('title');
             $table->text('description');
             $table->date('deadline');
