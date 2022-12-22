@@ -207,33 +207,10 @@ export default {
 
                 this.selected_categories = this.selected_subcategories = [];
                 this.title = this.deadline = this.description = this.cost = this.gain = this.priority = "";
-                this.showToast(data.message, "success");
 
             }, error => {
                 this.loaded = true;
-            })
-
-            // fetch("http://127.0.0.1:8000/api/target", {
-            //     method: "POST",
-            //     headers: {
-            //         Accept: "application/json",
-            //         "Content-Type": "application/x-www-form-urlencoded",
-            //         Authorization: "Bearer " + this.access_token,
-            //     },
-            //     body: payload,
-            // })
-            //     .then((response) => response.json())
-            //     .then((data) => {
-            //         this.loaded = true;
-
-            //         if (!data.errors) {
-            //             this.selected_categories = this.selected_subcategories = [];
-            //             this.title = this.deadline = this.description = this.cost = this.gain = this.priority = "";
-            //             this.showToast(data.message, "success");
-            //         } else {
-            //             this.displayErrors(data.errors);
-            //         }
-            //     });
+            });
         },
 
         addCategory(categories , selected_categories, selected_category) {

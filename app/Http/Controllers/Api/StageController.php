@@ -35,6 +35,7 @@ class StageController extends Controller
     {
         try {
             $data = $request->all();
+            $data['stageid'] = null;
 
             $stage = Stage::create($data);
 

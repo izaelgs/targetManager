@@ -13,6 +13,8 @@ return [
     |
     */
 
+    'headermsg' => 'Invalid Data',
+
     'accepted' => 'The :attribute must be accepted.',
     'accepted_if' => 'The :attribute must be accepted when :other is :value.',
     'active_url' => 'The :attribute is not a valid URL.',
@@ -158,6 +160,12 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'email' => 'E-mail',
+        'password' => 'Senha',
+        'price' => 'Preço',
+        'size' => 'Tamanho',
+        'amount' => 'Quantidade',
+    ],
 
 ];
