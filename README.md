@@ -1,5 +1,23 @@
 # Target Manager
 
+## Screenshots
+
+![login](https://user-images.githubusercontent.com/72363296/209216060-810cf770-fc96-433d-98b6-716b5f99dfaf.PNG)
+
+![register](https://user-images.githubusercontent.com/72363296/209216073-5ea10e90-b1b6-4151-b6d4-cab436353125.PNG)
+
+![home](https://user-images.githubusercontent.com/72363296/209216093-1a28a1dc-c3d9-4699-aae9-03e510f4b6bb.PNG)
+
+![sidebar](https://user-images.githubusercontent.com/72363296/209216105-29de62a3-0177-4ab2-a7d4-c2c1219605a9.PNG)
+
+![categories](https://user-images.githubusercontent.com/72363296/209216120-2c9fd5e0-074e-479e-ab06-1ddc62d436b9.PNG)
+
+![addTarget](https://user-images.githubusercontent.com/72363296/209216161-7c281247-f567-4e6e-bd09-0f82edc979b0.PNG)
+
+![target](https://user-images.githubusercontent.com/72363296/209216203-99fa4bd9-946c-4883-b56d-5715440abc8e.PNG)
+
+
+
 ## Technologies used
 
 ### Frontend
