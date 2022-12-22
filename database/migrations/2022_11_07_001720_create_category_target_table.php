@@ -15,9 +15,11 @@ class CreateCategoryTargetTable extends Migration
     {
         Schema::create('category_target', function (Blueprint $table) {
             $table->foreignId('category_id')
-                ->constrained();
+                ->constrained()
+                ->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('target_id')
-                ->constrained();
+                ->constrained()
+                ->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
