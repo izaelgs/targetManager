@@ -112,7 +112,7 @@
                         class="form-control"
                         id="priority"
                         v-model="priority"
-                        min="0"
+                        min="1"
                         max="10"
                     />
                 </div>
@@ -123,7 +123,7 @@
                         class="form-control"
                         id="cost"
                         v-model="cost"
-                        min="0"
+                        min="1"
                         max="10"
                     />
                 </div>
@@ -134,7 +134,7 @@
                         class="form-control"
                         id="gain"
                         v-model="gain"
-                        min="0"
+                        min="1"
                         max="10"
                     />
                 </div>
@@ -171,9 +171,9 @@ export default {
             title: "",
             deadline: "",
             description: "",
-            cost: 0,
-            gain: 0,
-            priority: 0,
+            cost: 1,
+            gain: 1,
+            priority: 1,
 
             access_token: "",
         };

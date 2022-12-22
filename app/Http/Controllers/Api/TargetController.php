@@ -43,7 +43,10 @@ class TargetController extends Controller
                 $target->categories()->sync($data['categories']);
             }
 
-            return response()->json($target);
+            return response()->json([
+                'message' => __('messages.createTarget'),
+                'data' => $target,
+            ]);
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 401);
         }
@@ -72,9 +75,7 @@ class TargetController extends Controller
             }
 
             return response()->json([
-                'data' => [
-                    'msg' => 'objetivo atualizado com suseso'
-                ]
+                'message' => __('messages.updateTarget')
             ], 200);
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 401);
@@ -85,13 +86,11 @@ class TargetController extends Controller
     public function destroy($id)
     {
         try {
-            $target = auth('api')->user()->targets::find($id);
+            $target = auth('api')->user()->targets()->find($id);
             $target->delete();
 
             return response()->json([
-                'data' => [
-                    'msg' => 'objetivo deletado com suseso'
-                ]
+                'message' => __('messages.deleteTarget')
             ], 200);
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 401);

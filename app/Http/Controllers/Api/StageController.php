@@ -36,9 +36,12 @@ class StageController extends Controller
         try {
             $data = $request->all();
 
-            $target = Stage::create($data);
+            $stage = Stage::create($data);
 
-            return response()->json(['message' => 'Etapa registrada  XD']);
+            return response()->json([
+                'message' => __('messages.createStage'),
+                'data' => $stage,
+            ]);
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 401);
         }
@@ -68,7 +71,9 @@ class StageController extends Controller
             $stage = Stage::find($id);
             $stage->update($request->all());
 
-            return response()->json(['message' => 'Etapa atualizada  :D'], 200);
+            return response()->json([
+                'message' => __('messages.updateStage')
+            ], 200);
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 401);
         }
@@ -101,7 +106,9 @@ class StageController extends Controller
             $stage = Stage::find($id);
             $stage->delete();
 
-            return response()->json(['message' => 'Etapa apagada  :('], 200);
+            return response()->json([
+                'message' => __('messages.deleteStage')
+            ], 200);
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 401);
         }

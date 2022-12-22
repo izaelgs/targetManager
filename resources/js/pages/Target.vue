@@ -5,8 +5,9 @@
             <button @click="editFields()" class="btn px-2">
                 <i :class="['bi', edit ? 'bi-x-lg' :  'bi-pencil']"></i>
             </button>
-            <button class="btn px-2 text-danger"><i class="bi bi-trash"></i></button>
+            <button @click="remove()" class="btn px-2 text-danger"><i class="bi bi-trash"></i></button>
         </div>
+        <!-- Editar Informações-->
         <!-- <form v-show="edit" class="row g-3">
                 <div class="col-12">
                     <input
@@ -171,6 +172,7 @@
             </div>
             <p>{{ target.description }}</p>
         </div>
+        <!-- Etapas-->
         <div class="list-group text-start">
             <form
                 v-for="stage in editableStages"
@@ -399,6 +401,17 @@ export default {
     },
 
     methods: {
+
+        remove() {
+            this.loaded = false;
+            this.del("target/" + this.target.id, data => {
+                this.loaded = true;
+                this.$router.push('/');
+            }, error => {
+                this.loaded = true;
+            });
+        },
+
         edit_stage(stage) {
             stage.edit = !stage.edit;
         },
@@ -503,6 +516,9 @@ export default {
         getTarget() {
             this.loaded = false;
             this.get("target/" + this.$route.params.id, data => {
+
+                if(!data.stages) this.$router.push({name: 'notfound'});
+
                 data.stages = data.stages.map((stage) => {
                     stage.edit = false;
                     return stage;
