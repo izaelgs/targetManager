@@ -133,8 +133,6 @@ export default {
             title: "",
             description: "",
             categoryid: "",
-
-            access_token: "",
         };
     },
 

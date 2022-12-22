@@ -37,6 +37,12 @@ export default {
         }
     },
 
+    computed: {
+        token() {
+            return this.$store.state.token;
+        },
+    },
+
     created() {
         Cookie.remove('access_token')
     },
@@ -57,6 +63,9 @@ export default {
                 this.loaded = true;
                 if(!data.error) {
                     Cookie.set('access_token', data.access_token);
+
+                    this.$store.state.token = data.access_token;
+
                     this.$router.push('/');
                 } else {
                     this.showToast(data.error == 'Unauthorized' ? 'E-mail ou Senha incorretos' : 'Erro desconhecido', 'danger');

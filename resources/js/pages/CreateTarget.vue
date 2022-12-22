@@ -4,7 +4,7 @@
         <section class="rounded">
             <h2>Adicionar Objetivo</h2>
             <p>
-                Um objetivo pode fazer parte de uma séria de categorias e conter
+                Um objetivo pode fazer parte de uma série de categorias e conter
                 diversas metas
             </p>
 
@@ -174,8 +174,6 @@ export default {
             cost: 1,
             gain: 1,
             priority: 1,
-
-            access_token: "",
         };
     },
 
@@ -204,6 +202,8 @@ export default {
 
             this.post('target', payload, (data) => {
                 this.loaded = true;
+
+                this.$store.state.targets.push(data.data);
 
                 this.selected_categories = this.selected_subcategories = [];
                 this.title = this.deadline = this.description = this.cost = this.gain = this.priority = "";

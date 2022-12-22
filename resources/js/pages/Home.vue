@@ -143,8 +143,6 @@ export default {
 
             order: false,
             field: "title",
-
-            access_token: "",
         };
     },
 

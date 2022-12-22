@@ -377,8 +377,6 @@ export default {
             deadline: "",
             complexity: "",
             tolerance: "",
-
-            access_token: "",
         };
     },
 
@@ -406,6 +404,15 @@ export default {
             this.loaded = false;
             this.del("target/" + this.target.id, data => {
                 this.loaded = true;
+
+                const index = this.$store.state.targets.indexOf(this.$store.state.targets.find(target => {
+                    return target.id == this.target.id
+                }));
+                console.log(index, this.target)
+                if (index > -1) {
+                    this.$store.state.targets.splice(index, 1); // 2nd parameter means remove one item only
+                }
+
                 this.$router.push('/');
             }, error => {
                 this.loaded = true;

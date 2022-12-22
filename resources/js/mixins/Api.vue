@@ -10,13 +10,20 @@ export default {
             language: ''
         }
     },
+
+    computed: {
+        token() {
+            return this.$store.state.token;
+        },
+    },
+
     created() {
         this.access_token = Cookie.get("access_token");
         this.language = Cookie.get("language") ?? navigator.language;
 
         axios.defaults.baseURL = `/api/`;
         axios.defaults.headers = {
-            "Authorization" : "Bearer " + this.access_token,
+            "Authorization" : "Bearer " + this.token,
             "Accept" : "application/json",
             "Accept-Language" : this.language
         };
@@ -73,16 +80,17 @@ export default {
                 })
         },
 
-        get(url, callback, errorHandler, hideSuccessMessage) {
+        get(url, callback, errorHandler, hideSuccessMessage, hideErrorMessage) {
             axios.get(url)
-            .then(data => {
-                if(data.status == 200) {
+                .then(data => {
                     callback(data.data);
                     if(!hideSuccessMessage) this.showToast(data.data.message, "success");
-                } else {
-                    errorHandler ? errorHandler(error.response.data) : this.showErrors(error.response.data);
-                }
-            })
+                })
+                .catch(error => {
+                    console.log(error);
+                    if(!hideErrorMessage) this.showErrors(error.response.data)
+                    if(errorHandler) errorHandler(error.response.data)
+                })
         },
 
 

@@ -42,19 +42,21 @@
                     Categorias
                 </router-link>
             </li>
+            <li v-if="token">
+                <a @click="logout" class="nav-link d-flex align-items-center pointer">
+                    <i
+                        class="bi bi-box-arrow-left me-2"
+                        style="font-size: 1.5rem; color: cornflowerblue"
+                    ></i>
+                    Logout
+                </a>
+            </li>
         </ul>
+
+        <!-- Projetos -->
         <hr />
-        <button
-            @click="appendTargets()"
-            class="btn d-flex align-items-center text-white w-100"
-        >
-            <i
-                class="bi-arrow-clockwise me-2"
-                style="font-size: 1.5rem; color: cornflowerblue"
-            ></i>
-            Atualizar
-        </button>
         <ul
+            v-show="token"
             v-if="targets.length"
             v-for="target in targets"
             class="nav flex-column"
@@ -82,22 +84,36 @@ import Api from "../mixins/Api.vue";
 export default {
     data() {
         return {
-            targets: [],
             active: false,
         };
     },
 
+    computed: {
+        token() {
+            return this.$store.state.token;
+        },
+
+        targets() {
+            return this.$store.state.targets;
+        },
+    },
+
     created() {
-        this.appendTargets();
+        if(this.token) this.appendTargets();
     },
 
     methods: {
-        appendTargets() {
-            const token = Cookie.get("access_token");
 
+        logout() {
+            Cookie.remove('access_token');
+            this.$store.state.token = null;
+            this.$router.push({name: 'login'});
+        },
+
+        appendTargets() {
             this.get('target', data => {
                 if (!data.error) {
-                    this.targets = data;
+                    this.$store.state.targets = data;
                 } else {
                     alert(data.error);
                 }
