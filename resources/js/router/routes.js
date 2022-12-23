@@ -4,6 +4,7 @@ import categories from '../pages/categories';
 import Target from '../pages/Target';
 import CreateTarget from '../pages/CreateTarget';
 import Login from '../pages/Login';
+import Register from '../pages/Register';
 
 import Guard from '../services/middleware';
 
@@ -21,6 +22,11 @@ export default {
             path: '/login',
             name: 'login',
             component: Login,
+        },
+        {
+            path: '/register',
+            name: 'register',
+            component: Register,
         },
         {
             path: '/',

@@ -1,7 +1,7 @@
 <template>
     <div class="h-100 d-flex justify-content-center align-items-center">
         <Loader v-show="!loaded"></Loader>
-        <form @submit.stop.prevent="submit" class="form-signin">
+        <form @submit.stop.prevent="submit" class="form-signin text-center p-4 border rounded">
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
             <div class="form-floating mt-2">
@@ -12,9 +12,19 @@
             <div class="form-floating mt-2">
                 <input v-model="password" type="password" class="form-control" id="floatingPassword"
                     placeholder="Password" required>
-                <label for="floatingPassword">Senha</label>
+                <label for="floatingPassword">Password</label>
             </div>
-            <button class="w-100 btn btn-lg btn-primary mt-2" type="submit">Entrar</button>
+
+            <button class="w-100 btn btn-lg btn-primary my-2" type="submit">Sign In</button>
+
+            <div class="h-100 text-center">
+                Don't have account?
+                <router-link
+                    :to="{ name: 'register' }"
+                >
+                    <em>Sign Up</em>
+                </router-link>
+            </div>
         </form>
     </div>
 </template>

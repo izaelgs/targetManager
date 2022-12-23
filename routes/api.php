@@ -12,7 +12,9 @@ Route::get('/', function() {
     return 'Bem Vindo à Api TargetManager';
 });
 
+
 Route::namespace('App\Http\Controllers\Api')->group(function() {
+    Route::post('user', 'UserController@store');
 
     Route::group(['middleware' => 'api'], function() {
         Route::post('login', 'AuthController@login');
