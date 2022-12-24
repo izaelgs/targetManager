@@ -475,7 +475,7 @@ export default {
                 complexity: this.complexity,
             };
 
-            this.post("stage/", payload, data => {
+            this.post("stage", payload, data => {
                 let emojis = [
                     "check-circle-fill",
                     "emoji-laughing-fill",
