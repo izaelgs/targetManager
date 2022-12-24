@@ -67,7 +67,6 @@
                     <label for="categories" class="form-label">
                         SubCategoria:
                         <span
-                            v-if="selected_subcategories"
                             v-for="category in selected_subcategories"
                             class="badge bg-secondary mx-1"
                         >
@@ -86,7 +85,6 @@
                     >
                         <option value="" hidden>Seleciona Uma Categoria</option>
                         <option
-                            v-if="subcategories"
                             v-for="category in subcategories"
                             :value="category.id"
                             :key="category.id"
@@ -195,10 +193,12 @@ export default {
                 cost: this.cost,
                 gain: this.gain,
                 priority: this.priority,
-                "categories[]": this.selected_categories.map((category) => {
+                categories: this.selected_categories.map((category) => {
                     return category.id;
                 }),
             };
+
+            console.log(payload);
 
             this.post('target', payload, (data) => {
                 this.loaded = true;
