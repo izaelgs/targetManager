@@ -23,9 +23,6 @@ export default {
             console.log('.....');
 
             return urgency < 10 ? Math.round(urgency) : 10;
-            // let urgency_log = log(urgency, 2);
-            // let result = ((data.gain / data.cost) * (data.priority / 5)) / 10;
-            // return round(urgency_log * result);
         }
     }
 }

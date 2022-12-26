@@ -166,6 +166,10 @@ return [
         'price' => 'Preço',
         'size' => 'Tamanho',
         'amount' => 'Quantidade',
+        'title' => 'Titulo',
+        'description' => 'Descrição',
+        'deadline' => 'Prazo',
+        'complexity' => 'Complexidade',
     ],
 
 ];
