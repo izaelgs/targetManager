@@ -198,8 +198,6 @@ export default {
                 }),
             };
 
-            console.log(payload);
-
             this.post('target', payload, (data) => {
                 this.loaded = true;
 

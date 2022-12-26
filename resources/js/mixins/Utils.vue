@@ -17,6 +17,11 @@ export default {
 
             let urgency = data.priority * percentual;
 
+            console.log(interval1);
+            console.log(interval2);
+            console.log(percentual);
+            console.log('.....');
+
             return urgency < 10 ? Math.round(urgency) : 10;
             // let urgency_log = log(urgency, 2);
             // let result = ((data.gain / data.cost) * (data.priority / 5)) / 10;
