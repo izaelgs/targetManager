@@ -33,8 +33,8 @@
                         <th @click="changeField('deadline')" class="pointer text-center d-none d-md-block">
                             Prazo <i v-show="field == 'deadline'" :class="['bi', order ? 'bi-caret-up-fill' : 'bi-caret-down-fill']"></i>
                         </th>
-                        <th @click="changeField('sugested_priority')" class="pointer text-center">
-                            Urgência <i v-show="field == 'sugested_priority'" :class="['bi', order ? 'bi-caret-up-fill' : 'bi-caret-down-fill']"></i>
+                        <th @click="changeField('urgency')" class="pointer text-center">
+                            Urgência <i v-show="field == 'urgency'" :class="['bi', order ? 'bi-caret-up-fill' : 'bi-caret-down-fill']"></i>
                         </th>
                     </tr>
                 </thead>
@@ -59,7 +59,7 @@
                         <td class="text-center">{{ target.priority }}</td>
                         <td class="text-center d-none d-md-block">{{ target.deadline }}</td>
                         <td class="text-center">
-                            {{ target.sugested_priority }}
+                            {{ target.urgency }}
                         </td>
                     </tr>
                 </tbody>
@@ -130,6 +130,7 @@
 import Cookie from "js-cookie";
 import Loader from "../components/Loader.vue";
 import Api from "../mixins/Api.vue";
+import Utils from "../mixins/Utils.vue";
 
 export default {
     data() {
@@ -165,7 +166,12 @@ export default {
             this.get(`target/${params}`, (data) => {
                 this.loaded = true;
                 if (!data.error) {
+                    data.map(target => {
+                        target.urgency = this.getUrgency(target);
+                    })
+
                     this.targets = data;
+
                     this.targets.sort(
                         compareValues(this.field, this.order)
                     );
@@ -210,7 +216,7 @@ export default {
 
     components: {Loader},
 
-    mixins: [Api]
+    mixins: [Api, Utils]
 };
 
 function compareValues(key, order) {

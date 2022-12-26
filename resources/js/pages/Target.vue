@@ -150,6 +150,7 @@
                     {{ category.title }}
                 </span>
             </div>
+            <!-- Atributos -->
             <div>
                 <span class="badge text-bg-secondary">
                     Custo: {{ target.cost }}
@@ -164,7 +165,7 @@
                     Prazo: {{ target.deadline }}
                 </span>
                 <span class="badge text-bg-secondary">
-                    Urgência: {{ target.sugested_priority }}
+                    Urgência: {{ target.urgency }}
                 </span>
                 <span class="badge text-bg-secondary">
                     Status: {{ target.status }}
@@ -364,6 +365,7 @@ import Cookie from "js-cookie";
 import appendToast from "../mixins/appendToast.vue";
 import Api from "../mixins/Api.vue";
 import Loader from "../components/Loader.vue";
+import Utils from "../mixins/Utils.vue";
 
 export default {
     data() {
@@ -526,6 +528,8 @@ export default {
 
                 if(!data.stages) this.$router.push({name: 'notfound'});
 
+                data.urgency = this.getUrgency(data);
+
                 data.stages = data.stages.map((stage) => {
                     stage.edit = false;
                     return stage;
@@ -540,6 +544,6 @@ export default {
 
     components: {Loader},
 
-    mixins: [appendToast, Api],
+    mixins: [appendToast, Api, Utils],
 };
 </script>

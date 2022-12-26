@@ -27,11 +27,11 @@ class TargetController extends Controller
         try {
             $data = $request->all();
 
-            $diff = strtotime(date('Y-m-d')) - strtotime($data['deadline']);
-            $interval = round($diff / 86400) + 30;
 
             $data['user_id'] = auth('api')->user()->id;
 
+            // $diff = strtotime(date('Y-m-d')) - strtotime($data['deadline']);
+            // $interval = round($diff / 86400) + 30;
             // $urgency = $interval > 0 || $interval < 60 ? 2 ** $interval : 1;
             // $urgency_log = log($urgency, 2);
             // $yield = (($data['gain'] / $data['cost']) * ($data['priority'] / 5)) / 10;
