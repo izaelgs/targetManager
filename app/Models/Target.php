@@ -16,8 +16,7 @@ class Target extends Model
         'cost',
         'gain',
         'priority',
-        'deadline',
-        'sugested_priority'
+        'deadline'
     ];
 
     public function categories()

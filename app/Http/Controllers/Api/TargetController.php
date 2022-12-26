@@ -32,10 +32,10 @@ class TargetController extends Controller
 
             $data['user_id'] = auth('api')->user()->id;
 
-            $urgency = $interval > 0 || $interval < 60 ? 2 ** $interval : 1;
-            $urgency_log = log($urgency, 2);
-            $yield = (($data['gain'] / $data['cost']) * ($data['priority'] / 5)) / 10;
-            $data['sugested_priority'] = round($urgency_log * $yield);
+            // $urgency = $interval > 0 || $interval < 60 ? 2 ** $interval : 1;
+            // $urgency_log = log($urgency, 2);
+            // $yield = (($data['gain'] / $data['cost']) * ($data['priority'] / 5)) / 10;
+            // $data['sugested_priority'] = round($urgency_log * $yield);
 
             $target = Target::create($data);
 

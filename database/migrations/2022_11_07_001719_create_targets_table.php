@@ -23,7 +23,6 @@ class CreateTargetsTable extends Migration
             $table->tinyInteger('gain');
             $table->tinyInteger('priority');
             $table->date('deadline');
-            $table->tinyInteger('sugested_priority');
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
