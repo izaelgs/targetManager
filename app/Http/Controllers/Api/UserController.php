@@ -22,7 +22,7 @@ class UserController extends Controller
         try {
             $user = User::paginate('10');
 
-            return "response()->json(111, 200)";
+            return response()->json($user, 200);
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), 401);
         }
