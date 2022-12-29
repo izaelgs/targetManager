@@ -24,13 +24,13 @@ Route::namespace('App\Http\Controllers\Api')->group(function() {
 
     });
     // Route::post('login', 'Auth\LoginJwtController@login');
-    Route::resource('User', 'UserController');
 
     Route::group(['middleware' => 'jwt.auth'], function() {
+        Route::get('admin/users', 'UserController@index');
         Route::get('category/{id}/targets', 'CategoryController@targets');
         Route::get('category/categories', 'CategoryController@indexPivot');
-        Route::resource('category', 'CategoryController');
         Route::get('category/father', 'CategoryController@indexFather');
+        Route::resource('category', 'CategoryController');
         Route::resource('target', 'TargetController');
         Route::patch('stage/{id}', 'StageController@patch');
         Route::resource('stage', 'StageController');
