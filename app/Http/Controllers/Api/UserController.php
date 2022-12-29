@@ -20,7 +20,7 @@ class UserController extends Controller
     public function index() {
 
         try {
-            $user = $this->user->paginate('10');
+            $user = User::paginate('10');
 
             return response()->json($user, 200);
         } catch (\Exception $e) {

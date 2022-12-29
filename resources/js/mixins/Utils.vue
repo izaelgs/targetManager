@@ -12,8 +12,9 @@ export default {
             let diffInDays2 = diffInMs2 / (1000 * 60 * 60 * 24);
             let interval2 = diffInDays2 > 0 ? Math.round(diffInDays2) : 0;
 
-            let percentual = 1.06 - (interval1 / interval2);
-            percentual = percentual > 0 ? percentual : 1;
+            let percentual = interval1 / interval2;
+            percentual = percentual > 0 ? 1 - percentual : 0; // o percentual do prazo não pode ser negativo
+            percentual = percentual > 1 ? percentual : percentual * 2; // se o percentual for de 100% a urgência dobra
 
             let urgency = data.priority * percentual;
 
@@ -22,7 +23,7 @@ export default {
             console.log(percentual);
             console.log('.....');
 
-            return urgency < 10 ? Math.round(urgency) : 10;
+            return urgency < 10 ? Math.round(urgency) : 10; // o valor máximo de urgência é 10
         }
     }
 }
