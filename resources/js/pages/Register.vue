@@ -5,35 +5,34 @@
             <div class="row">
                 <div class="col-md-6">
                     <form @submit.stop.prevent="submit" class="row g-3">
-                        <h1 class="h3 mb-3 fw-normal">Create your account</h1>
-                        <em class="text-secondary">It'll be a pleasure to welcome you</em>
+                        <h1 class="h3 mb-3 fw-normal">{{ $t("register.create_account") }}</h1>
+                        <em class="text-secondary">{{ $t("register.description") }}</em>
 
                         <div class="col-12">
-                            <label for="name">Name</label>
-                            <input v-model="name" type="text" class="form-control" name="name"
-                                placeholder="Name">
+                            <label for="name">{{ $t("register.name") }}</label>
+                            <input v-model="name" type="text" class="form-control" name="name">
                         </div>
                         <div class="col-12">
-                            <label for="email">Email</label>
+                            <label for="email">E-mail</label>
                             <input v-model="email" type="email" class="form-control" name="email"
                                 placeholder="name@example.com">
                         </div>
                         <div class="col-md-6">
-                            <label for="password">Password</label>
+                            <label for="password">{{ $t("register.password") }}</label>
                             <input v-model="password" type="password" class="form-control" name="password">
                         </div>
                         <div class="col-md-6">
-                            <label for="password_confirmation">Confirm password</label>
+                            <label for="password_confirmation">{{ $t("register.password_confirmation") }}</label>
                             <input v-model="password_confirmation" type="password" class="form-control" name="password">
                         </div>
                         <div class="col-12 d-flex justify-content-end">
-                            <button class="btn btn-primary" type="submit">Register</button>
+                            <button class="btn btn-primary" type="submit">{{ $t("register.register") }}</button>
                         </div>
                     </form>
                 </div>
                 <div class="col-md-6 d-none d-md-flex flex-column justify-content-center align-items-center">
                     <i class="fa-solid fa-user-plus text-primary icon-lg"></i>
-                    <em class="text-secondary py-2">some large descriptions about the website and stufs</em>
+                    <em class="text-secondary py-2">{{ $t("register.large") }}</em>
                 </div>
             </div>
         </div>

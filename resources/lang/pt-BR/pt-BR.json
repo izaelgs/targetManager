@@ -5,5 +5,15 @@
         "password" : "Senha",
         "dont_have_account" : "Não tem cadastro?",
         "signup" : "Cadastre-se"
+    },
+    "register" : {
+        "create_account" : "Crie sua conta",
+        "description" : "preencha os campos abaixo para criar sua conta",
+        "name" : "Nome",
+        "password" : "Senha",
+        "password_confirmation" : "Confirme sua Senha",
+        "register" : "Cadastrar",
+        "have_account" : "Já tem cadastro?",
+        "large" : "Descrição super completa e detalhada sobre todas as vantagens de usar este produto"
     }
 }
