@@ -7,8 +7,8 @@
             class="form-select bg-dark border-secondary text-secondary position-absolute bottom-0 end-0 w-25 m-2"
             aria-label="Default select example"
         >
-            <option value="pt-BR">Português</option>
-            <option value="en">English</option>
+            <option value="pt-BR">pt-BR</option>
+            <option value="en">En</option>
         </select>
     </footer>
 </template>
