@@ -31,7 +31,7 @@
                         <div class="h-100 text-center">
                             {{ $t("register.have_account") }}
                             <router-link
-                                :to="{ name: 'register' }"
+                                :to="{ name: 'login' }"
                             >
                                 <em>{{ $t("login.signin") }}</em>
                             </router-link>
