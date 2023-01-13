@@ -25,6 +25,7 @@ export default {
     },
 
     mounted() {
+
         this.$watch(
             () => this.token,
             (toParams, previousParams) => {

@@ -1,0 +1,9 @@
+{
+    "login" : {
+        "psignin" : "Entre com a sua conta",
+        "signin" : "Entrar",
+        "password" : "Senha",
+        "dont_have_account" : "Não tem cadastro?",
+        "signup" : "Cadastre-se"
+    }
+}

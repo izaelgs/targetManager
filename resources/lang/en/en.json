@@ -1,0 +1,9 @@
+{
+    "login" : {
+        "psignin" : "Please sign in",
+        "signin" : "Sign in",
+        "password" : "Password",
+        "dont_have_account" : "Don't have account?",
+        "signup" : "Sign up"
+    }
+}

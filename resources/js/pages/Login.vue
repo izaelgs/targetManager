@@ -2,7 +2,7 @@
     <div class="h-100 d-flex justify-content-center align-items-center">
         <Loader v-show="!loaded"></Loader>
         <form @submit.stop.prevent="submit" class="form-signin text-center p-4 border rounded">
-            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+            <h1 class="h3 mb-3 fw-normal">{{ $t("login.psignin") }}</h1>
 
             <div class="form-floating mt-2">
                 <input v-model="email" type="email" class="form-control" id="floatingInput"
@@ -12,17 +12,17 @@
             <div class="form-floating mt-2">
                 <input v-model="password" type="password" class="form-control" id="floatingPassword"
                     placeholder="Password" required>
-                <label for="floatingPassword">Password</label>
+                <label for="floatingPassword">{{ $t("login.password") }}</label>
             </div>
 
-            <button class="w-100 btn btn-lg btn-primary my-2" type="submit">Sign In</button>
+            <button class="w-100 btn btn-lg btn-primary my-2" type="submit">{{ $t("login.signin") }}</button>
 
             <div class="h-100 text-center">
-                Don't have account?
+                {{ $t("login.dont_have_account") }}
                 <router-link
                     :to="{ name: 'register' }"
                 >
-                    <em>Sign Up</em>
+                    <em>{{ $t("login.signup") }}</em>
                 </router-link>
             </div>
         </form>
