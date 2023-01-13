@@ -28,6 +28,14 @@
                         <div class="col-12 d-flex justify-content-end">
                             <button class="btn btn-primary" type="submit">{{ $t("register.register") }}</button>
                         </div>
+                        <div class="h-100 text-center">
+                            {{ $t("register.have_account") }}
+                            <router-link
+                                :to="{ name: 'register' }"
+                            >
+                                <em>{{ $t("login.signin") }}</em>
+                            </router-link>
+                        </div>
                     </form>
                 </div>
                 <div class="col-md-6 d-none d-md-flex flex-column justify-content-center align-items-center">
