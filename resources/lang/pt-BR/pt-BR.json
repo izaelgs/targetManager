@@ -15,5 +15,9 @@
         "register" : "Cadastrar",
         "have_account" : "Já tem cadastro?",
         "large" : "Descrição super completa e detalhada sobre todas as vantagens de usar este produto"
+    },
+    "sidebar" : {
+        "addTarget" : "Criar Objetivo",
+        "categories" : "Categorias"
     }
 }

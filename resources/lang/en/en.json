@@ -15,5 +15,9 @@
         "register" : "Register",
         "have_account" : "Already Registered?",
         "large" : "some large descriptions about the website and stufs"
+    },
+    "sidebar" : {
+        "addTarget" : "Create Target",
+        "categories" : "Categories"
     }
 }

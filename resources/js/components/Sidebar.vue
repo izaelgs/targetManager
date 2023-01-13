@@ -27,7 +27,7 @@
                         class="bi-plus-circle me-2"
                         style="font-size: 1.5rem; color: cornflowerblue"
                     ></i>
-                    Adicionar Objetivo
+                    {{ $t("sidebar.addTarget") }}
                 </router-link>
             </li>
             <li>
@@ -39,7 +39,7 @@
                         class="bi-tags me-2"
                         style="font-size: 1.5rem; color: cornflowerblue"
                     ></i>
-                    Categorias
+                    {{ $t("sidebar.categories") }}
                 </router-link>
             </li>
             <li v-if="token">
