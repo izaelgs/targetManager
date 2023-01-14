@@ -2,27 +2,23 @@
     <div>
         <Loader v-show="!loaded"></Loader>
         <section class="rounded">
-            <h2>Adicionar Objetivo</h2>
+            <h2>{{ $t("createTarget.createTarget") }}</h2>
             <p>
-                Um objetivo pode fazer parte de uma série de categorias e conter
-                diversas metas
+                {{ $t("createTarget.subtitle") }}
             </p>
 
             <form @submit.stop.prevent="submit" class="row g-3">
                 <div class="col-12">
-                    <label for="title" class="form-label">Titulo</label>
+                    <label for="title" class="form-label">{{ $t("createTarget.title") }}</label>
                     <input
                         type="name"
                         class="form-control"
                         id="title"
                         v-model="title"
-                        placeholder="insira um titulo"
                     />
                 </div>
                 <div class="col-12">
-                    <label for="description" class="form-label"
-                        >Descricao</label
-                    >
+                    <label for="description" class="form-label">{{ $t("createTarget.description") }}</label>
                     <textarea
                         class="form-control"
                         id="description"
@@ -32,7 +28,7 @@
                 </div>
                 <div class="col-md-6">
                     <label for="categories" class="form-label">
-                        Categoria:
+                        {{ $t("createTarget.category") }}:
                         <span
                             v-if="selected_categories"
                             v-for="category in selected_categories"
@@ -51,7 +47,7 @@
                         v-model="selected_category"
                         class="form-select"
                     >
-                        <option value="" hidden>Seleciona Uma Categoria</option>
+                        <option value="" hidden>{{ $t("createTarget.select_category") }}</option>
                         <option
                             v-if="categories"
                             v-for="category in categories"
@@ -65,7 +61,7 @@
                 </div>
                 <div class="col-md-6">
                     <label for="categories" class="form-label">
-                        SubCategoria:
+                        {{ $t("createTarget.sub_category") }}:
                         <span
                             v-for="category in selected_subcategories"
                             class="badge bg-secondary mx-1"
@@ -83,7 +79,7 @@
                         v-model="selected_subcategory"
                         class="form-select"
                     >
-                        <option value="" hidden>Seleciona Uma Categoria</option>
+                        <option value="" hidden>{{ $t("createTarget.select_category") }}</option>
                         <option
                             v-for="category in subcategories"
                             :value="category.id"
@@ -95,7 +91,7 @@
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <label for="deadline" class="form-label">Prazo</label>
+                    <label for="deadline" class="form-label">{{ $t("home.deadline") }}</label>
                     <input
                         type="date"
                         class="form-control"
@@ -104,7 +100,7 @@
                     />
                 </div>
                 <div class="col-md-6">
-                    <label for="priority" class="form-label">Prioridade</label>
+                    <label for="priority" class="form-label">{{ $t("home.priority") }}</label>
                     <input
                         type="number"
                         class="form-control"
@@ -115,7 +111,7 @@
                     />
                 </div>
                 <div class="col-md-6">
-                    <label for="cost" class="form-label">Custo</label>
+                    <label for="cost" class="form-label">{{ $t("home.cost") }}</label>
                     <input
                         type="number"
                         class="form-control"
@@ -126,7 +122,7 @@
                     />
                 </div>
                 <div class="col-md-6">
-                    <label for="gain" class="form-label">Ganho</label>
+                    <label for="gain" class="form-label">{{ $t("home.gain") }}</label>
                     <input
                         type="number"
                         class="form-control"
@@ -138,7 +134,7 @@
                 </div>
                 <div class="col-12 d-grid gap-2">
                     <button type="submit" class="btn btn-outline-primary">
-                        Cadastrar
+                        {{ $t("categories.create") }}
                     </button>
                 </div>
             </form>
@@ -147,6 +143,7 @@
 </template>
 
 <script>
+
 import Cookie from "js-cookie";
 import AppendToast from "../mixins/appendToast.vue";
 import Loader from "../components/Loader.vue";
@@ -260,23 +257,4 @@ export default {
     mixins: [AppendToast, Api]
 };
 
-function encodeUrl(payload) {
-    var formBody = [];
-    for (var property in payload) {
-        if (Array.isArray(payload[property])) {
-            for (var item in payload[property]) {
-                var encodedKey = encodeURIComponent(property);
-                var encodedValue = encodeURIComponent(payload[property][item]);
-                formBody.push(encodedKey + "=" + encodedValue);
-            }
-        } else {
-            var encodedKey = encodeURIComponent(property);
-            var encodedValue = encodeURIComponent(payload[property]);
-            formBody.push(encodedKey + "=" + encodedValue);
-        }
-    }
-    formBody = formBody.join("&");
-
-    return formBody;
-}
 </script>

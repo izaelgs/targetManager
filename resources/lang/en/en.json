@@ -33,5 +33,15 @@
     "categories" : {
         "select_any" : "Select a category",
         "create" : "Create"
+    },
+
+    "createTarget" : {
+        "createTarget" : "Create Target",
+        "subtitle" : "fill in the fields below to create a new target",
+        "title" : "Title",
+        "description" : "Description",
+        "category" : "Category",
+        "sub_category" : "Subcategory",
+        "select_category" : "Select a Category"
     }
 }

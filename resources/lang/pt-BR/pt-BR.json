@@ -6,6 +6,7 @@
         "dont_have_account" : "Não tem cadastro?",
         "signup" : "Cadastre-se"
     },
+
     "register" : {
         "create_account" : "Crie sua conta",
         "description" : "preencha os campos abaixo para criar sua conta",
@@ -16,10 +17,12 @@
         "have_account" : "Já tem cadastro?",
         "large" : "Descrição super completa e detalhada sobre todas as vantagens de usar este produto"
     },
+
     "sidebar" : {
         "addTarget" : "Criar Objetivo",
         "categories" : "Categorias"
     },
+
     "home" : {
         "search" : "Pesquisar",
         "target" : "Objetivo",
@@ -30,8 +33,19 @@
         "urgency" : "Urgencia",
         "categories" : "Categorias"
     },
+
     "categories" : {
         "select_any" : "Selecione uma categoria",
         "create" : "Adicionar"
+    },
+
+    "createTarget" : {
+        "createTarget" : "Criar Objetivo",
+        "subtitle" : "preencha os campos abaixo para criar um novo objetivo",
+        "title" : "Titulo",
+        "description" : "Descrição",
+        "category" : "Categoria",
+        "sub_category" : "Subcategoria",
+        "select_category" : "Selecione uma Categoria"
     }
 }
