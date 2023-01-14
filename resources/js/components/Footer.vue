@@ -16,6 +16,7 @@
 <script>
 
 import Cookie from "js-cookie";
+import Api from "../mixins/Api.vue";
 let langs = ['en', 'pt-BR'];
 
 export default {
@@ -28,9 +29,12 @@ export default {
     methods: {
         changeLang() {
             this.$i18n.locale = this.language;
+            this.reloadHeaders()
             Cookie.set('language', this.language);
         }
-    }
+    },
+
+    mixins: [Api]
 }
 
 </script>

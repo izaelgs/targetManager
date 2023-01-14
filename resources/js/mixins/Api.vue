@@ -28,6 +28,7 @@ export default {
             "Accept-Language" : this.language
         };
     },
+
     methods: {
 
         del(url, callback, errorHandler, hideSuccessMessage) {
@@ -103,9 +104,12 @@ export default {
             }
         },
 
-        changeLanguage(language) {
-            Cookie.set('language', language);
-            window.location.reload()
+        reloadHeaders() {
+            axios.defaults.headers = {
+                "Authorization" : "Bearer " + this.token,
+                "Accept" : "application/json",
+                "Accept-Language" : this.$i18n.locale
+            };
         }
     },
 
