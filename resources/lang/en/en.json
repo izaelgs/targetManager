@@ -51,6 +51,10 @@
         "description" : "Please check the URL in the address bar and try again."
     },
 
+    "footer" : {
+        "development" : "Under Development..."
+    },
+
     "forms" : {
         "save" : "Save",
         "add" : "Add"

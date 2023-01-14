@@ -54,6 +54,10 @@
         "description" : "Por favor verifique a barra de endereço URL e tente novamente."
     },
 
+    "footer" : {
+        "development" : "Em Desenvolvimento..."
+    },
+
     "forms" : {
         "save" : "Salvar"
     },

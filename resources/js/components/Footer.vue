@@ -1,6 +1,6 @@
 <template>
     <footer class="bg-dark mt-4 rounded-2 text-secondary d-flex align-items-center justify-content-center footer position-relative">
-        @Em Desenvolvimento...
+        {{ $t("footer.development") }}
         <select
             v-model="language"
             @change="changeLang"
