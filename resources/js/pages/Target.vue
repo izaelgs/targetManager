@@ -153,19 +153,19 @@
             <!-- Atributos -->
             <div>
                 <span class="badge text-bg-secondary">
-                    Custo: {{ target.cost }}
+                    {{ $t("home.cost") }}: {{ target.cost }}
                 </span>
                 <span class="badge text-bg-secondary">
-                    Retorno: {{ target.gain }}
+                    {{ $t("home.gain") }}: {{ target.gain }}
                 </span>
                 <span class="badge text-bg-secondary">
-                    Prioridade: {{ target.priority }}
+                    {{ $t("home.priority") }}: {{ target.priority }}
                 </span>
                 <span class="badge text-bg-secondary">
-                    Prazo: {{ target.deadline }}
+                    {{ $t("home.deadline") }}: {{ target.deadline }}
                 </span>
                 <span class="badge text-bg-secondary">
-                    Urgência: {{ target.urgency }}
+                    {{ $t("home.urgency") }}: {{ target.urgency }}
                 </span>
                 <span class="badge text-bg-secondary">
                     Status: {{ target.status }}
@@ -232,7 +232,7 @@
                             ></textarea>
                         </div>
                         <div class="col col-md-4">
-                            <label for="deadline" class="mt-1">Prazo:</label>
+                            <label for="deadline" class="mt-1">{{ $t("stage.deadline") }}:</label>
                             <input
                                 v-model="stage.deadline"
                                 type="date"
@@ -241,9 +241,7 @@
                             />
                         </div>
                         <div class="col-6 col-md-4">
-                            <label for="complexity" class="mt-1"
-                                >Complexidade:</label
-                            >
+                            <label for="complexity" class="mt-1">{{ $t("stage.complexity") }}:</label>
                             <input
                                 v-model="stage.complexity"
                                 type="number"
@@ -252,9 +250,7 @@
                             />
                         </div>
                         <div class="col-6 col-md-4">
-                            <label for="tolerance" class="mt-1"
-                                >Tolerância:</label
-                            >
+                            <label for="tolerance" class="mt-1">{{ $t("stage.tolerance") }}:</label>
                             <input
                                 v-model="stage.tolerance"
                                 type="number"
@@ -264,15 +260,15 @@
                         </div>
                         <div class="d-grid gap-2 mt-2">
                             <button class="btn btn-primary" type="submit">
-                                Salvar
+                                {{ $t("forms.save") }}
                             </button>
                         </div>
                     </div>
                     <span v-show="!stage.edit" class="badge text-bg-primary">
-                        Complexidade: {{ stage.complexity }}
+                        {{ $t("stage.complexity") }}: {{ stage.complexity }}
                     </span>
                     <span v-show="!stage.edit" class="badge text-bg-primary">
-                        Tolerância: {{ stage.tolerance }}
+                        {{ $t("stage.tolerance") }}: {{ stage.tolerance }}
                     </span>
                     <br />
                     <small v-show="!stage.edit">{{ stage.description }}</small>
@@ -292,12 +288,12 @@
                             aria-expanded="true"
                             aria-controls="new-stage"
                         >
-                            <i class="bi bi-journal-plus fs-5"></i> Adicionar Etapa
+                            <i class="bi bi-journal-plus fs-5 me-2"></i> {{ $t("stage.add_step") }}
                         </button>
                     </h2>
                     <div class="row collapse" id="new-stage">
                         <div class="col-12">
-                            <label for="title" class="mt-1">Titulo:</label>
+                            <label for="title" class="mt-1">{{ $t("stage.title") }}:</label>
                             <input
                                 v-model="title"
                                 type="text"
@@ -306,9 +302,7 @@
                             />
                         </div>
                         <div class="col-12">
-                            <label for="description" class="mt-1"
-                                >Descrição:</label
-                            >
+                            <label for="description" class="mt-1">{{ $t("stage.description") }}:</label>
                             <textarea
                                 v-model="description"
                                 id="description"
@@ -318,7 +312,7 @@
                             ></textarea>
                         </div>
                         <div class="col col-md-4">
-                            <label for="deadline" class="mt-1">Prazo:</label>
+                            <label for="deadline" class="mt-1">{{ $t("stage.deadline") }}:</label>
                             <input
                                 v-model="deadline"
                                 type="date"
@@ -327,9 +321,7 @@
                             />
                         </div>
                         <div class="col-6 col-md-4">
-                            <label for="complexity" class="mt-1"
-                                >Complexidade:</label
-                            >
+                            <label for="complexity" class="mt-1">{{ $t("stage.complexity") }}:</label>
                             <input
                                 v-model="complexity"
                                 type="number"
@@ -338,9 +330,7 @@
                             />
                         </div>
                         <div class="col-6 col-md-4">
-                            <label for="tolerance" class="mt-1"
-                                >Tolerância:</label
-                            >
+                            <label for="tolerance" class="mt-1">{{ $t("stage.tolerance") }}:</label>
                             <input
                                 v-model="tolerance"
                                 type="number"
@@ -350,7 +340,7 @@
                         </div>
                         <div class="d-grid gap-2 mt-2">
                             <button class="btn btn-primary" type="submit">
-                                Adicionar
+                                {{ $t("forms.save") }}
                             </button>
                         </div>
                     </div>

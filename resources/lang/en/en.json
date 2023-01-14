@@ -49,5 +49,19 @@
     "notfound" : {
         "notfound" : "Page not found",
         "description" : "Please check the URL in the address bar and try again."
+    },
+
+    "forms" : {
+        "save" : "Save",
+        "add" : "Add"
+    },
+
+    "stage" : {
+        "add_step" : "Add Step",
+        "title" : "Title",
+        "description" : "Description",
+        "complexity" : "Complexity",
+        "tolerance" : "Tolerance",
+        "deadline" : "Deadline"
     }
 }

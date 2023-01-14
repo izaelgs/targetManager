@@ -52,5 +52,18 @@
     "notfound" : {
         "notfound" : "Pagina não encontrada",
         "description" : "Por favor verifique a barra de endereço URL e tente novamente."
+    },
+
+    "forms" : {
+        "save" : "Salvar"
+    },
+
+    "stage" : {
+        "add_step" : "Adicionar Etapa",
+        "title" : "Titulo",
+        "description" : "Descrição",
+        "complexity" : "Complexidade",
+        "tolerance" : "Tolerância",
+        "deadline" : "Prazo"
     }
 }
