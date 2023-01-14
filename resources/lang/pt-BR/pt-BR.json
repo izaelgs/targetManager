@@ -47,5 +47,10 @@
         "category" : "Categoria",
         "sub_category" : "Subcategoria",
         "select_category" : "Selecione uma Categoria"
+    },
+
+    "notfound" : {
+        "notfound" : "Pagina não encontrada",
+        "description" : "Por favor verifique a barra de endereço URL e tente novamente."
     }
 }

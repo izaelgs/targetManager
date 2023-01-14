@@ -6,9 +6,9 @@
                     <div class="list-group-item card d-flex flex-row align-items-center justify-content-center">
                         <h1 class="fw-bolder text-primary">404</h1>
                         <div class="vr mx-2"></div>
-                        <h1 class="fw-bold">Page not found</h1>
+                        <h1 class="fw-bold">{{ $t("notfound.notfound") }}</h1>
                     </div>
-                    <p class="mt-6 text-center">Please check the URL in the address bar and try again.</p>
+                    <p class="mt-6 text-center">{{ $t("notfound.description") }}</p>
                 </div>
             </div>
         </div>

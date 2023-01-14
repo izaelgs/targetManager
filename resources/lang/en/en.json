@@ -30,6 +30,7 @@
         "urgency" : "Urgency",
         "categories" : "Categories"
     },
+
     "categories" : {
         "select_any" : "Select a category",
         "create" : "Create"
@@ -43,5 +44,10 @@
         "category" : "Category",
         "sub_category" : "Subcategory",
         "select_category" : "Select a Category"
+    },
+
+    "notfound" : {
+        "notfound" : "Page not found",
+        "description" : "Please check the URL in the address bar and try again."
     }
 }
