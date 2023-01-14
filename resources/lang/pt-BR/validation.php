@@ -161,6 +161,7 @@ return [
     */
 
     'attributes' => [
+        'name' => 'Nome',
         'email' => 'E-mail',
         'password' => 'Senha',
         'price' => 'Preço',

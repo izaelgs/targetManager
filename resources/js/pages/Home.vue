@@ -7,11 +7,11 @@
                     <input
                         class="form-control me-2"
                         type="search"
-                        placeholder="Search"
+                        :placeholder="$t('home.search')"
                         aria-label="Search"
                     />
                     <button class="btn btn-outline-success" type="submit">
-                        Search
+                        {{ $t("home.search") }}
                     </button>
                 </form>
             </div>
@@ -19,22 +19,22 @@
                 <thead>
                     <tr>
                         <th @click="changeField('title')" class="pointer">
-                            Objetivo <i v-show="field == 'title'" :class="['bi', order ? 'bi-caret-up-fill' : 'bi-caret-down-fill']"></i>
+                            {{ $t("home.target") }} <i v-show="field == 'title'" :class="['bi', order ? 'bi-caret-up-fill' : 'bi-caret-down-fill']"></i>
                         </th>
                         <th @click="changeField('cost')" class="pointer text-center">
-                            Custo <i v-show="field == 'cost'" :class="['bi', order ? 'bi-caret-up-fill' : 'bi-caret-down-fill']"></i>
+                            {{ $t("home.cost") }} <i v-show="field == 'cost'" :class="['bi', order ? 'bi-caret-up-fill' : 'bi-caret-down-fill']"></i>
                         </th>
                         <th @click="changeField('gain')" class="pointer text-center d-none d-md-block">
-                            Ganho <i v-show="field == 'gain'" :class="['bi', order ? 'bi-caret-up-fill' : 'bi-caret-down-fill']"></i>
+                            {{ $t("home.gain") }} <i v-show="field == 'gain'" :class="['bi', order ? 'bi-caret-up-fill' : 'bi-caret-down-fill']"></i>
                         </th>
                         <th @click="changeField('priority')" class="pointer text-center">
-                            Prioridade <i v-show="field == 'priority'" :class="['bi', order ? 'bi-caret-up-fill' : 'bi-caret-down-fill']"></i>
+                            {{ $t("home.priority") }} <i v-show="field == 'priority'" :class="['bi', order ? 'bi-caret-up-fill' : 'bi-caret-down-fill']"></i>
                         </th>
                         <th @click="changeField('deadline')" class="pointer text-center d-none d-md-block">
-                            Prazo <i v-show="field == 'deadline'" :class="['bi', order ? 'bi-caret-up-fill' : 'bi-caret-down-fill']"></i>
+                            {{ $t("home.deadline") }} <i v-show="field == 'deadline'" :class="['bi', order ? 'bi-caret-up-fill' : 'bi-caret-down-fill']"></i>
                         </th>
                         <th @click="changeField('urgency')" class="pointer text-center">
-                            Urgência <i v-show="field == 'urgency'" :class="['bi', order ? 'bi-caret-up-fill' : 'bi-caret-down-fill']"></i>
+                            {{ $t("home.urgency") }} <i v-show="field == 'urgency'" :class="['bi', order ? 'bi-caret-up-fill' : 'bi-caret-down-fill']"></i>
                         </th>
                     </tr>
                 </thead>
@@ -67,7 +67,7 @@
         </div>
         <div class="col-md-3">
             <div class="card mb-2">
-                <div class="card-header pointer" @click="fetchTargets">Categoria</div>
+                <div class="card-header pointer" @click="fetchTargets">{{ $t("home.categories") }}</div>
                 <div class="accordion accordion-flush" id="accordionCategories">
                     <div
                         class="accordion-item"

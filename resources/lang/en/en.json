@@ -19,5 +19,15 @@
     "sidebar" : {
         "addTarget" : "Create Target",
         "categories" : "Categories"
+    },
+    "home" : {
+        "search" : "Search",
+        "target" : "Target",
+        "cost" : "Cost",
+        "gain" : "Gain",
+        "priority" : "Priority",
+        "deadline" : "Deadline",
+        "urgency" : "Urgency",
+        "categories" : "Categories"
     }
 }
