@@ -7,7 +7,7 @@
     >
         <i @click="toggle"
             :class="[
-                'toggle-sidebar bi pointer fs-1 px-2 text-dark position-absolute top-0 start-100 d-none',
+                'toggle-sidebar bi pointer fs-1 px-2 text-dark position-absolute top-0 start-100 d-none bg-light rounded-5',
                 active ? 'bi-x' : 'bi-list'
             ]"
         ></i>
