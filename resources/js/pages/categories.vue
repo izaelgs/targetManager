@@ -18,7 +18,7 @@
                         </div>
 
                         <select v-model="categoryid" class="form-control">
-                            <option value="">Seleciona Uma Categoria</option>
+                            <option value="">{{ $t("categories.select_any") }}</option>
                             <option
                                 v-if="father_categories"
                                 v-for="category in father_categories"
@@ -35,7 +35,7 @@
                         ></textarea>
                         <div class="d-grid gap-2">
                             <button class="btn btn-outline-primary" type="submit">
-                                Adicionar
+                                {{ $t("categories.create") }}
                             </button>
                         </div>
                     </div>

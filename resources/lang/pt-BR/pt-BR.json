@@ -29,5 +29,9 @@
         "deadline" : "Prazo",
         "urgency" : "Urgencia",
         "categories" : "Categorias"
+    },
+    "categories" : {
+        "select_any" : "Selecione uma categoria",
+        "create" : "Adicionar"
     }
 }
