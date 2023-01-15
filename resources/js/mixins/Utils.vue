@@ -18,11 +18,6 @@ export default {
 
             let urgency = data.priority * percentual;
 
-            console.log(interval1);
-            console.log(interval2);
-            console.log(percentual);
-            console.log('.....');
-
             return urgency < 10 ? Math.round(urgency) : 10; // o valor máximo de urgência é 10
         }
     }

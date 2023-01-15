@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\targetRequest;
 use App\Models\Target;
 use DateTime;
+use Exception;
 use Illuminate\Http\Request;
 
 class TargetController extends Controller
@@ -67,8 +68,13 @@ class TargetController extends Controller
     public function update(targetRequest $request, $id)
     {
         try {
-            $target = auth('api')->user()->targets::find($id);
-            $target->update($request->all());
+
+            $data = $request->all();
+
+            $target = auth('api')->user()->targets->find($id);
+
+            if($target) $target->update($data);
+            else throw new Exception('objetivo não encontrado');
 
             if (isset($data['categories'])) {
                 $target->categories()->sync($data['categories']);

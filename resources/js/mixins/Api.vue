@@ -69,7 +69,7 @@ export default {
                 })
         },
 
-        put(url,payload, callback, errorHandler) {
+        put(url,payload, callback, errorHandler, hideSuccessMessage, hideErrorMessage) {
             axios.put(url, payload)
                 .then(data => {
                     this.showToast(data.data.message, "success");
@@ -77,7 +77,8 @@ export default {
                 })
                 .catch(error => {
                     console.log(error);
-                    errorHandler ? errorHandler(error.response.data) : this.showErrors(error.response.data);
+                    if(!hideErrorMessage) this.showErrors(error.response.data)
+                    if(errorHandler) errorHandler(error.response.data)
                 })
         },
 

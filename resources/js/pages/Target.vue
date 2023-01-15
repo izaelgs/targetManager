@@ -8,7 +8,7 @@
             <button @click="remove()" class="btn px-2 text-danger"><i class="bi bi-trash"></i></button>
         </div>
         <!-- Editar Informações-->
-        <!-- <form v-show="edit" class="row g-3">
+        <form @submit.stop.prevent="submitTarget" v-show="edit" class="row g-3 text-start">
                 <div class="col-12">
                     <input
                         type="name"
@@ -26,6 +26,8 @@
                         rows="3"
                     ></textarea>
                 </div>
+
+                <!-- Categorias -->
                 <div class="col-md-6">
                     <label for="categories" class="form-label">
                         Categoria:
@@ -59,11 +61,11 @@
                         </option>
                     </select>
                 </div>
+                <!-- Subcategorias -->
                 <div class="col-md-6">
                     <label for="categories" class="form-label">
-                        SubCategoria:
+                        {{ $t("createTarget.sub_category") }}:
                         <span
-                            v-if="selected_subcategories"
                             v-for="category in selected_subcategories"
                             class="badge bg-secondary mx-1"
                         >
@@ -92,6 +94,7 @@
                         </option>
                     </select>
                 </div>
+
                 <div class="col-6">
                     <label for="deadline" class="form-label">Prazo</label>
                     <input
@@ -139,7 +142,9 @@
                         Salvar Alterações
                     </button>
                 </div>
-        </form> -->
+        </form>
+
+        <!-- Informações -->
         <div v-show="!edit">
             <h2>{{ target.title }}</h2>
             <div>
@@ -173,6 +178,7 @@
             </div>
             <p>{{ target.description }}</p>
         </div>
+
         <!-- Etapas-->
         <div class="list-group text-start">
             <form
@@ -274,6 +280,8 @@
                     <small v-show="!stage.edit">{{ stage.description }}</small>
                 </div>
             </form>
+
+            <!-- Adicionar Etapa -->
             <form
                 @submit.stop.prevent="submit"
                 class="list-group-item card bg-secondary text-light my-2 p-3"
@@ -309,7 +317,8 @@
                                 class="form-control my-2"
                                 cols="30"
                                 rows="5"
-                            ></textarea>
+                            >
+                            </textarea>
                         </div>
                         <div class="col col-md-4">
                             <label for="deadline" class="mt-1">{{ $t("stage.deadline") }}:</label>
@@ -364,6 +373,15 @@ export default {
             edit: false,
             target: {},
 
+            categories: [],
+            subcategories: [],
+
+            selected_categories: [],
+            selected_category: "",
+
+            selected_subcategories: [],
+            selected_subcategory: "",
+
             title: "",
             description: "",
             deadline: "",
@@ -381,7 +399,8 @@ export default {
         );
         this.access_token = Cookie.get("access_token");
 
-        this.getTarget()
+        this.getTarget();
+        this.fetchCategories()
     },
 
     computed: {
@@ -400,7 +419,7 @@ export default {
                 const index = this.$store.state.targets.indexOf(this.$store.state.targets.find(target => {
                     return target.id == this.target.id
                 }));
-                console.log(index, this.target)
+
                 if (index > -1) {
                     this.$store.state.targets.splice(index, 1); // 2nd parameter means remove one item only
                 }
@@ -529,6 +548,96 @@ export default {
             }, error => {
                 this.loaded = true;
             }, true);
+        },
+
+        submitTarget() {
+            this.loaded = false;
+            this.selected_categories = this.selected_categories.concat(this.selected_subcategories);
+
+            const payload = {
+                title: this.target.title,
+                deadline: this.target.deadline,
+                description: this.target.description,
+                cost: this.target.cost,
+                gain: this.target.gain,
+                priority: this.target.priority,
+                categories: this.selected_categories.map((category) => {
+                    return category.id;
+                }),
+            };
+
+            this.put('target/' + this.target.id, payload, (data) => {
+                this.target.categories = this.selected_categories;
+                this.edit = false;
+                this.loaded = true;
+                this.selected_categories = this.selected_categories.filter(category => category.is_father)
+
+            }, error => {
+                this.loaded = true;
+            });
+        },
+
+        addCategory(categories , selected_categories, selected_category) {
+            let category = categories.find(
+                (c) => c.id == selected_category
+            );
+            selected_categories.push(category);
+
+            if(category.is_father) this.subcategories = this.subcategories.concat(category.categories)
+
+            categories.find(
+                (c) => c.id == selected_category
+            ).disabled = "disabled";
+        },
+
+        removeCategory(category, categories, selected_categories) {
+            const index = selected_categories.indexOf(category);
+            if (index > -1) { // only splice array when item is found
+                selected_categories.splice(index, 1); // 2nd parameter means remove one item only
+            }
+            if(category.is_father) { // add subcategories on subcategories input
+                this.subcategories = this.subcategories.filter(subcategory => !category.categories.includes(subcategory));
+                this.selected_subcategories = this.selected_subcategories.filter(subcategory => !category.categories.includes(subcategory))
+                category.categories.forEach(subcategory => {
+                    subcategory.disabled = null;
+                });
+            }
+
+            categories.find(
+                (c) => c.id == category.id
+            ).disabled = null;
+        },
+
+        fetchCategories() {
+            this.get('category/categories', (data) => {
+                this.loaded = true;
+                if (!data.error) {
+
+                    data.forEach(category => {
+                        if(this.target.categories.find(
+                            (c) => c.id == category.id
+                        )){
+                            this.selected_categories.push(category);
+
+                            category.categories.forEach(subcategory => {
+                                if(this.target.categories.find(
+                                    (c) => c.id == subcategory.id
+                                )){
+                                    this.selected_subcategories.push(subcategory);
+                                    subcategory.disabled = "disabled";
+                                }
+                            })
+
+                            this.subcategories = this.subcategories.concat(category.categories)
+                            category.disabled = "disabled";
+                        }
+                    })
+
+                    this.categories = data;
+                } else {
+                    alert(data.error);
+                }
+            }, null, true)
         }
     },
 
