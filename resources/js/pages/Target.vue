@@ -394,13 +394,14 @@ export default {
         this.$watch(
             () => this.$route.params,
             (toParams, previousParams) => {
-                this.getTarget()
+                this.getTarget();
+                this.fetchCategories();
             }
         );
         this.access_token = Cookie.get("access_token");
 
         this.getTarget();
-        this.fetchCategories()
+        this.fetchCategories();
     },
 
     computed: {
