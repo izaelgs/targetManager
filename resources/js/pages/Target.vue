@@ -395,6 +395,7 @@ export default {
             () => this.$route.params,
             (toParams, previousParams) => {
                 this.getTarget();
+                this.edit = false;
                 this.fetchCategories();
             }
         );
