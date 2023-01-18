@@ -181,6 +181,7 @@
 
         <!-- Etapas-->
         <div class="list-group text-start">
+            <div>{{ $t("stage.completed") }}: {{ stagesPercentual }}</div>
             <form
                 v-for="stage in editableStages"
                 @submit.stop.prevent="submitEdit(stage)"
@@ -408,6 +409,14 @@ export default {
     computed: {
         editableStages() {
             return this.target.stages;
+        },
+
+        stagesCompleted() {
+            return this.target.stages.filter(stage => stage.status);
+        },
+
+        stagesPercentual() {
+            return this.target.stages ? `${this.stagesCompleted.length}/${this.target.stages.length}` : 0;
         }
     },
 

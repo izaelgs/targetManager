@@ -68,6 +68,7 @@
         "description" : "Descrição",
         "complexity" : "Complexidade",
         "tolerance" : "Tolerância",
-        "deadline" : "Prazo"
+        "deadline" : "Prazo",
+        "completed" : "Etapas Concluídas"
     }
 }
