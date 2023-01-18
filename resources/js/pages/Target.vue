@@ -87,7 +87,6 @@
                             v-if="subcategories"
                             v-for="category in subcategories"
                             :value="category.id"
-                            :key="category.id"
                             :disabled="category.disabled"
                         >
                             {{ category.title }}
@@ -181,7 +180,12 @@
 
         <!-- Etapas-->
         <div class="list-group text-start">
-            <div>{{ $t("stage.completed") }}: {{ stagesPercentual }}</div>
+            <div>
+                {{ $t("stage.completed") }}: {{ stagesPercentual.text }}
+                <div class="progress" role="progressbar" aria-label="Progresso" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar" :style="`width: ${stagesPercentual.number}%`"></div>
+                </div>
+            </div>
             <form
                 v-for="stage in editableStages"
                 @submit.stop.prevent="submitEdit(stage)"
@@ -416,7 +420,12 @@ export default {
         },
 
         stagesPercentual() {
-            return this.target.stages ? `${this.stagesCompleted.length}/${this.target.stages.length}` : 0;
+            let data = {
+                text: this.target.stages ? `${this.stagesCompleted.length}/${this.target.stages.length}` : 0,
+                number: this.target.stages ? (this.stagesCompleted.length / this.target.stages.length) * 100 : 100
+            };
+
+            return data;
         }
     },
 
