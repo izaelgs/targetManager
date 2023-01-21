@@ -70,5 +70,13 @@
         "tolerance" : "Tolerância",
         "deadline" : "Prazo",
         "completed" : "Etapas Concluídas"
+    },
+
+    "filter" : {
+        "orderby" : "Ordenar Por",
+        "order" : "Ordem",
+        "ascending" : "Crescente",
+        "descending" : "Decrescente",
+        "created" : "Data de criação"
     }
 }

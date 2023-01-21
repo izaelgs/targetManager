@@ -186,6 +186,25 @@
                     <div class="progress-bar" :style="`width: ${stagesPercentual.number}%`"></div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-6 mt-2">
+                    <label for="orderby">{{ $t("filter.orderby") }}:</label>
+                    <select @change="changeField()" v-model="field" id="orderby" class="form-select" aria-label="orderby">
+                        <option value="created_at">{{ $t("filter.created") }}</option>
+                        <option value="complexity">{{ $t("stage.complexity") }}</option>
+                        <option value="tolerance">{{ $t("stage.tolerance") }}</option>
+                        <option value="deadline">{{ $t("stage.deadline") }}</option>
+                    </select>
+                </div>
+                <div class="col-6 mt-2">
+                    <label for="order">{{ $t("filter.order") }}:</label>
+                    <select @change="changeField()" v-model="order" id="order" class="form-select" aria-label="order">
+                        <option value="false">{{ $t("filter.ascending") }}</option>
+                        <option value="true">{{ $t("filter.descending") }}</option>
+                    </select>
+                </div>
+            </div>
+            <hr>
             <form
                 v-for="stage in editableStages"
                 @submit.stop.prevent="submitEdit(stage)"
@@ -392,6 +411,9 @@ export default {
             deadline: "",
             complexity: "",
             tolerance: "",
+
+            order: false,
+            field: "deadline"
         };
     },
 
@@ -565,6 +587,7 @@ export default {
                 });
                 this.loaded = true;
                 this.target = data;
+                this.changeField();
             }, error => {
                 this.loaded = true;
             }, true);
@@ -658,6 +681,15 @@ export default {
                     alert(data.error);
                 }
             }, null, true)
+        },
+
+        changeField(field = this.field) {
+            // this.field == field ?
+            //     this.order = !this.order :
+            //     this.field = field;
+            this.target.stages.sort(
+                this.compareValues(this.field, this.order)
+            );
         }
     },
 
