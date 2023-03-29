@@ -25,11 +25,8 @@ class stageRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'description' => 'required',
-            'tolerance' => 'required',
             'target_id' => 'required',
             'deadline' => 'required',
-            'complexity' => 'required'
         ];
     }
 }

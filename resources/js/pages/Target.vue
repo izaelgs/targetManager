@@ -191,8 +191,6 @@
                     <label for="orderby">{{ $t("filter.orderby") }}:</label>
                     <select @change="changeField()" v-model="field" id="orderby" class="form-select" aria-label="orderby">
                         <option value="created_at">{{ $t("filter.created") }}</option>
-                        <option value="complexity">{{ $t("stage.complexity") }}</option>
-                        <option value="tolerance">{{ $t("stage.tolerance") }}</option>
                         <option value="deadline">{{ $t("stage.deadline") }}</option>
                     </select>
                 </div>
@@ -270,37 +268,12 @@
                                 id="deadline"
                             />
                         </div>
-                        <div class="col-6 col-md-4">
-                            <label for="complexity" class="mt-1">{{ $t("stage.complexity") }}:</label>
-                            <input
-                                v-model="stage.complexity"
-                                type="number"
-                                class="form-control mb-1"
-                                id="complexity"
-                            />
-                        </div>
-                        <div class="col-6 col-md-4">
-                            <label for="tolerance" class="mt-1">{{ $t("stage.tolerance") }}:</label>
-                            <input
-                                v-model="stage.tolerance"
-                                type="number"
-                                class="form-control mb-1"
-                                id="tolerance"
-                            />
-                        </div>
                         <div class="d-grid gap-2 mt-2">
                             <button class="btn btn-primary" type="submit">
                                 {{ $t("forms.save") }}
                             </button>
                         </div>
                     </div>
-                    <span v-show="!stage.edit" class="badge text-bg-primary">
-                        {{ $t("stage.complexity") }}: {{ stage.complexity }}
-                    </span>
-                    <span v-show="!stage.edit" class="badge text-bg-primary">
-                        {{ $t("stage.tolerance") }}: {{ stage.tolerance }}
-                    </span>
-                    <br />
                     <small v-show="!stage.edit">{{ stage.description }}</small>
                 </div>
             </form>
@@ -351,24 +324,6 @@
                                 type="date"
                                 class="form-control mb-1"
                                 id="deadline"
-                            />
-                        </div>
-                        <div class="col-6 col-md-4">
-                            <label for="complexity" class="mt-1">{{ $t("stage.complexity") }}:</label>
-                            <input
-                                v-model="complexity"
-                                type="number"
-                                class="form-control mb-1"
-                                id="complexity"
-                            />
-                        </div>
-                        <div class="col-6 col-md-4">
-                            <label for="tolerance" class="mt-1">{{ $t("stage.tolerance") }}:</label>
-                            <input
-                                v-model="tolerance"
-                                type="number"
-                                class="form-control mb-1"
-                                id="tolerance"
                             />
                         </div>
                         <div class="d-grid gap-2 mt-2">
@@ -549,9 +504,7 @@ export default {
                 title: stage.title,
                 description: stage.description,
                 target_id: stage.target_id,
-                tolerance: stage.tolerance,
                 deadline: stage.deadline,
-                complexity: stage.complexity,
                 stageid: stage.stageid,
             };
 
